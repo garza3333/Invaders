@@ -9,12 +9,12 @@ package structures;
  *
  * @author curso
  */
-public class Node {
-    Node next,previous;
-    int life;
-    int id;
-    boolean boss;
-    public Node(){
+public class Ship {
+    private Ship next,previous;
+    private int life,id;
+    private boolean boss;
+ 
+    public Ship(){
         this.next = this.previous = null;
         
     }
@@ -22,18 +22,18 @@ public class Node {
      * Enlaza un nodo a otro
      * @param n nodo a enlazar
      */
-    public void setNext(Node n){
+    public void setNext(Ship n){
         this.next = n;
     }
     /**
      * Retorna el nodo siguiente
      * @return 
      */
-    public Node getNext(){
+    public Ship getNext(){
         return this.next;
     }
     /**
-     * Retorna el atributo lfe
+     * Retorna el atributo life
      * @return 
      */
     public int getLife(){
@@ -56,14 +56,14 @@ public class Node {
      * Enlaza un nodo a un nodo anterior
      * @param n 
      */
-    public void setPrevious(Node n){
+    public void setPrevious(Ship n){
         this.previous = n;
     }
     /**
      * retorna el nodo anterior
      * @return 
      */
-    public Node getPrevious(){
+    public Ship getPrevious(){
         return this.previous;
     }
     

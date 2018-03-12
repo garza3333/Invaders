@@ -7,14 +7,14 @@ package structures;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
-public class DoublyLinkedList extends LinkedList{
-    public DoublyLinkedList(){
+public class CircularList extends LinkedList{
+    public CircularList(){
         this.head = this.tail = null;
     }
     /**
-     * añade un nodo a la lista y los enlaza al anterior y al siguiente
+     * Añade un nodo a la lista y lo enlaza al head
      * @param n 
      */
     @Override
@@ -29,18 +29,16 @@ public class DoublyLinkedList extends LinkedList{
     
     
     
-    
     private void ad(Ship n){
         if(isEmpty()){
             this.head = this.tail = n;
-        }else{
-            Ship temp = this.head;
-            while(temp.getNext() != null){
-                temp = temp.getNext();
-            }
-            temp.setNext(n);
-            n.setPrevious(temp);
+    }else{
+            this.tail.setNext(n);
+            this.tail = n;
+            tail.setNext(this.head);
         }
+        this.size++;
     }
+    
     
 }

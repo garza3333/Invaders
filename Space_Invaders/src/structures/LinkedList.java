@@ -10,10 +10,10 @@ package structures;
  * @author curso
  */
 public class LinkedList {
-    int size;
-    Node head;
+    protected int size;
+    protected Ship head,tail;
     public LinkedList(){
-        
+        this.head = this.tail = null;
     }
     /**
      * Retorna true en caso de que head sea null , de lo contrario true
@@ -26,22 +26,29 @@ public class LinkedList {
      * añade un nuevo nodo a la lista
      * @param n nodo a añadir
      */
-    public void add(Node n){
+    public void add(Ship n){
         this.ad(n);
     }
     /**
      * Elimina un nodo de la lista dependiendo del id que tenga
      * @param n 
      */
-    public void delete(Node n){
+    public void delete(Ship n){
         this.del(n);
     }
     /**
-     * Retorna el nodo head de la lista que es el primer elemento
+     * Retorna el atributo head de la lista 
      * @return 
      */
-    public Node getHead(){
+    public Ship getHead(){
         return this.head;
+    }
+    /**
+     * Retorna el atributo tail de la lista
+     * @return 
+     */
+    public Ship getTail(){
+        return this.tail;
     }
     
     
@@ -50,19 +57,18 @@ public class LinkedList {
     
     
     
-    private void ad(Node n){
+    private void ad(Ship n){
         if(isEmpty()){
-            this.head = n;
+            this.head=this.tail = n;
         }else{
-            Node temp = this.head;
-            while(temp.getNext() != null){
-                temp = temp.getNext();
-            }temp.setNext(n);
+            
+            this.tail.setNext(n);
+            this.tail = n;
         }
         size++;
     }
-    private void del(Node n){
-        Node temp = this.head;
+    private void del(Ship n){
+        Ship temp = this.head;
         while(temp.getNext().getId() != n.getId()){
             temp = temp.getNext();
         }temp.setNext(temp.getNext().getNext());
