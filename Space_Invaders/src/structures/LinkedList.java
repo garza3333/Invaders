@@ -50,13 +50,6 @@ public class LinkedList {
     public Ship getTail(){
         return this.tail;
     }
-    
-    
-    
-    
-    
-    
-    
     private void ad(Ship n){
         if(isEmpty()){
             this.head=this.tail = n;
