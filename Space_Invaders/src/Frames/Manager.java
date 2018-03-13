@@ -13,12 +13,8 @@ import javax.swing.JFrame;
  */
 public class Manager {
     
-    
-    
     public Manager(){
-        
-        
-        
+            
     }
     
     
@@ -26,13 +22,12 @@ public class Manager {
     public void show(String n){
         switch(n){
             case "main":
-                MainFrame m = new MainFrame(true);
+                MainFrame m = new MainFrame();         
                 break;
                 
                 
-            case "data":
-                
-                DataFrame d = new DataFrame(true);
+            case "data":  
+                DataFrame d = new DataFrame();
                 break;
                 
                 

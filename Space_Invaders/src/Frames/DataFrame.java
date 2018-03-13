@@ -10,8 +10,9 @@ import  java.awt.*;
 import static java.awt.Color.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,57 +22,84 @@ import javax.swing.JLabel;
  *
  * @author curso
  */
-public class DataFrame {
+public final class DataFrame {
     private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/startup.png");
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg"); 
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
     private static final JFrame v = new JFrame();
-    public DataFrame(boolean e){
+    private Font fontPlayers;
+    public DataFrame(){
+        
+                try 
+        {
+         fontPlayers = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
+        
+        } 
+        catch(  FontFormatException | IOException e) 
+        {
+            fontPlayers = null;
+        }
+//        v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        v.setLayout(new GridLayout());
         
         v.setResizable(false);
-v.setUndecorated(true);
-v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-v.setIconImage(Icono);
-v.setSize(1000,550);
-v.setLocationRelativeTo(null);
-v.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,BLACK));
+        v.setUndecorated(true);
+        v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        v.setIconImage(Icono);
+        v.setSize(1000,550);
+        v.setLocationRelativeTo(null);
+        v.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,BLACK));
 
-JLabel dataBack= new JLabel(new ImageIcon(back));
-
-dataBack.setLayout(new BoxLayout(dataBack,BoxLayout.Y_AXIS));
+        JLabel dataBack= new JLabel(new ImageIcon(back));
 
 
-JButton menu = new JButton("Menu");
-menu.setMaximumSize(new Dimension(100,50));
-menu.setBackground(bg);
-menu.setForeground(fg);
-menu.setFocusPainted(false);
-menu.setCursor(new Cursor(Cursor.HAND_CURSOR));
-menu.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, BLACK));
-
-menu.setAlignmentY(JButton.SOUTH);
-menu.addActionListener(new Funcion());
 
 
-v.add(dataBack);
-dataBack.add(menu);
-v.show(e);
+        JButton menu = new JButton("Menu");
+        menu.setMaximumSize(new Dimension(100,50));
+        menu.setBackground(bg);
+        menu.setForeground(fg);
+        menu.setFocusPainted(false);
+        menu.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        menu.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, BLACK));
+
+
+        menu.setBounds(400,400, 200, 90);
+        menu.addActionListener(new Funcion());
+
+        JLabel players = new JLabel("Players");
+        players.setBackground(bg);
+        players.setForeground(fg);
+        players.setFont(this.fontPlayers.deriveFont(Font.PLAIN,45));
+        players.setBounds(150,50,400,100);
+        
+        JLabel scores = new JLabel("Scores");
+        scores.setBackground(bg);
+        scores.setForeground(fg);
+        scores.setFont(this.fontPlayers.deriveFont(Font.PLAIN,45));
+        scores.setBounds(650,50,400,100);
+
+
+        v.add(dataBack);
+        dataBack.add(players);
+        dataBack.add(scores);
+        dataBack.add(menu);
+        
+//        v.getContentPane().validate();
+//        v.repaint();
+        v.setVisible(true);
+
 
     }
-       public void show(boolean c){
-        v.setVisible(c);
-    }
-       
-        static class Funcion implements ActionListener{
-           
-           public void Funcion(){
-              
-           }
-
+      
+        static class Funcion extends Manager implements ActionListener{
+  
         @Override
         public void actionPerformed(ActionEvent e) {
-            v.show(false);
+            
+            v.dispose();
+            this.show("main");
         }
            
        }

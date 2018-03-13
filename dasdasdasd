@@ -1,0 +1,30 @@
+[33mcommit b7eed01f831319e28a5979a04b897cee0ceb4195[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Daniel <garza3390@estudiantec.cr>
+Date:   Sun Mar 11 22:20:35 2018 -0600
+
+    Modificacacion y creacion de nuevas Listas
+    
+    Se modifico el nombre del Node por Ship, se agrego la clase
+    CircularList y DoublyCircularList y los metodos de aÃadir de cada
+    una para proceder a crear la clase que creara las listas de naves
+    del juego
+
+[33mcommit 2dae1a873bfa81dc81b0064e1584fff14eb88e6d[m
+Author: Curso <curso@HR-11.ec.tec.ac.cr>
+Date:   Fri Mar 9 15:10:44 2018 -0600
+
+    Se creo el modulo structures y clases iniciales
+    
+    El modulo structures contiene las clases Node - LinkedList
+    -DoublyLinkedList pero estas estan sin terminar , se crearon para
+    poder almacenar la informacion de las naves a traves de nodos y la
+    creacion de listas de naves por medio de las listas enlazadas
+
+[33mcommit c78e127d9696c58df9be1df693d27b14b6bef682[m
+Author: Daniel <garza3390@estudiantec.cr>
+Date:   Tue Mar 6 22:05:54 2018 -0600
+
+    Iniciando proyecto 0 clases
+    
+    Este commit estÃ¡ hecho solamente para poder unir el repositorio local
+    al remoto, no posee codigo
