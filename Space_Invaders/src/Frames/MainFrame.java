@@ -35,15 +35,18 @@ public final class MainFrame extends Manager{
 //    private Font font;
     private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/startup.png");
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg");
+    
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
-    private Font fontTitle;
+    private final Color titleC = new Color(0,0,0);
+    private Font fontTitle,fontButton;
     
     public MainFrame(){
         
         try 
         {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
+        fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
         
         } 
         catch(Exception e) 
@@ -73,9 +76,9 @@ public final class MainFrame extends Manager{
         
         JLabel title = new JLabel("Space Invaders");
         title.setFont(this.fontTitle.deriveFont(Font.PLAIN,45));
-        title.setForeground(Color.BLACK);
+        title.setForeground(titleC);
 
-        title.setBounds(450,30,400,100);
+        title.setBounds(360,15,400,100);
         
         background.add(title);
         
@@ -86,7 +89,7 @@ public final class MainFrame extends Manager{
         icon.setBounds(550, 200, 250, 250);
 //        icon.setLocation(350,50);
         background.add(icon);
-        background.add(Box.createRigidArea(new Dimension(100,50)));
+
         
         
         
@@ -94,22 +97,26 @@ public final class MainFrame extends Manager{
       
       play.setForeground(fg);
       play.setBackground(bg);
+      play.setFont(this.fontButton.deriveFont(Font.PLAIN,25));
 
-      play.setBounds(100,80,200,100);
+      play.setBounds(0,115,400,80);
               
       play.setMaximumSize(new Dimension(300,100));
       play.setFocusPainted(false);
       play.setCursor(new Cursor(Cursor.HAND_CURSOR));
       play.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, BLACK));
+      play.addActionListener(new Start());
+      
       background.add(play);
-      background.add(Box.createRigidArea(new Dimension(100,70)));
+
       
       JButton data= new JButton("Data");
       
       data.setForeground(fg);
       data.setBackground(bg);
+      data.setFont(this.fontButton.deriveFont(Font.PLAIN,25));
 
-      data.setBounds(100,260,200,100);
+      data.setBounds(0,275,400,80);
       data.setMaximumSize(new Dimension(300,100));
       data.setFocusPainted(false);
       data.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -123,8 +130,9 @@ public final class MainFrame extends Manager{
       
       exit.setForeground(fg);
       exit.setBackground(bg);
+      exit.setFont(this.fontButton.deriveFont(Font.PLAIN,25));
 
-      exit.setBounds(100,420,200,100);
+      exit.setBounds(0,425,400,80);
       exit.setMaximumSize(new Dimension(300,100));
       exit.setFocusPainted(false);
       exit.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
@@ -171,8 +179,8 @@ public final class MainFrame extends Manager{
 //            });
 //t.start();
 //        }
+  
         
-
     
     static class Exit implements ActionListener
     {
@@ -192,6 +200,16 @@ public final class MainFrame extends Manager{
         }
         
     }
+    
+    static class Start extends Manager implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            v.dispose();
+            this.show("start");
+        }
+    
+}
 
 }
     

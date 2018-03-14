@@ -29,6 +29,14 @@ public class Manager {
             case "data":  
                 DataFrame d = new DataFrame();
                 break;
+            
+            case "start":
+                UsserFrame u = new UsserFrame();
+                break;
+            
+            case "play":
+                PlayFrame p = new PlayFrame();
+                break;
                 
                 
         }

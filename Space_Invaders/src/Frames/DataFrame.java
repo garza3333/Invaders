@@ -28,12 +28,13 @@ public final class DataFrame {
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
     private static final JFrame v = new JFrame();
-    private Font fontPlayers;
+    private Font fontPlayers,fontButton;
     public DataFrame(){
         
                 try 
         {
          fontPlayers = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
+         fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
         
         } 
         catch(  FontFormatException | IOException e) 
