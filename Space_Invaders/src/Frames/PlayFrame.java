@@ -5,16 +5,24 @@
  */
 package Frames;
 
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.BLUE;
+
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -59,11 +67,8 @@ public class PlayFrame{
         
         
         
-        Canvas canvas = new Canvas();
-        canvas.setMaximumSize(new Dimension(800,550));
-        canvas.setPreferredSize(new Dimension(800,550));
-        canvas.setBackground(Color.BLACK);
-        canvas.setVisible(true);
+        myCanvas canvas = new myCanvas();
+
         
         JPanel controlPanel = new JPanel(); 
         controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
@@ -139,9 +144,124 @@ public class PlayFrame{
         
         v.add(canvas,BorderLayout.WEST);
         v.add(controlPanel,BorderLayout.EAST);
+        v.repaint();
         v.setVisible(true);
         
     }
+    
+    private class myCanvas extends Canvas{
+        private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/spaceship.png");
+        private  int shipX = 400;//765 limite
+        private final int shipY = 500; // limite de naves enemigas
+        private boolean flag = false;
+        private Bullet b;
+        public myCanvas(){
+        
+        setMaximumSize(new Dimension(800,550));
+        setPreferredSize(new Dimension(800,550));
+        setBackground(Color.WHITE);
+        addKeyListener(new Key());
+        setFocusable(true);
+        setVisible(true);
+        }
+        @Override
+        public void paint(Graphics g){
+            if(flag){
+            g.drawImage(Icono,this.getX(),this.getY(),this);
+            g.drawImage(b.getImage(),b.getX(),b.getY(),this);
+            }else{
+                g.drawImage(Icono,this.getX(),this.getY(),this);
+            }
+            
+            
+           
+           
+            
+            
+        }
+        
+        @Override
+        public int getX(){
+            return this.shipX;
+        }
+        @Override
+        public int getY(){
+            return this.shipY;
+        }
+        public void setX(int x){
+            this.shipX += x;
+        }
+        
+        
+        
+        
+         class Key implements KeyListener{
+            
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_RIGHT:
+                        System.out.println("derecha");
+                        if(getX() <= 760){
+                        setX(5);}
+                        repaint();
+                        
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        System.out.println("izquierda");
+                        if(getY() >= 5){
+                        setX(-5);}
+                        repaint(); 
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        Shoot s = new Shoot();
+                        s.start();
+                      
+                         
+
+                        break;
+                        
+                    default:
+                        break;
+                }}
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+            }
+
+
+         }
+         class Shoot extends Thread{
+             @Override
+             public void run(){
+                System.out.println("space");
+                b = new Bullet();
+                b.setX(getX());
+                flag = true;
+                while(b.getY() != 0){
+                    b.setY(-5);
+                    try {
+                        Shoot.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    repaint();
+                                                      
+                    }
+             }
+         }
+         
+    }
+
+   
     
     
 

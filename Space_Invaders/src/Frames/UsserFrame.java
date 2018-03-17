@@ -10,11 +10,13 @@ import static java.awt.Color.BLACK;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,7 +42,7 @@ public class UsserFrame{
         fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
         
         } 
-        catch(Exception e) 
+        catch(FontFormatException | IOException e) 
         {
             fontTitle = null;
         }
