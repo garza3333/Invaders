@@ -5,8 +5,6 @@
  */
 package Frames;
 
-import javax.swing.JFrame;
-
 /**
  *
  * @author curso

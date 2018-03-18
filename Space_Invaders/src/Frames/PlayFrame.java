@@ -7,7 +7,6 @@ package Frames;
 
 
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.BLUE;
@@ -27,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -138,38 +138,47 @@ public class PlayFrame{
         controlPanel.add(lblLevel);
         controlPanel.add(level);
         
+        JPanel fondo = new JPanel();
+
+        fondo.setPreferredSize(new Dimension(800,1000));
+        fondo.setBackground(Color.WHITE);
+        fondo.add(canvas);
+        
+        
         
         JLabel space = new JLabel(new ImageIcon(spaceground));
         
         
-        v.add(canvas,BorderLayout.WEST);
+        v.add(fondo,BorderLayout.WEST);
         v.add(controlPanel,BorderLayout.EAST);
         v.repaint();
         v.setVisible(true);
         
     }
     
-    private class myCanvas extends Canvas{
+    private class myCanvas extends JComponent{
         private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/spaceship.png");
-        private  int shipX = 400;//765 limite
-        private final int shipY = 500; // limite de naves enemigas
+        private  int shipX = 200;  //384 limite derecho //200 pos nave
+        private final int shipY = 250; // limite de naves enemigas //500 en y
         private boolean flag = false;
         private Bullet b;
         public myCanvas(){
         
-        setMaximumSize(new Dimension(800,550));
-        setPreferredSize(new Dimension(800,550));
-        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(800,1000));
         addKeyListener(new Key());
         setFocusable(true);
         setVisible(true);
         }
         @Override
         public void paint(Graphics g){
+            
+            super.paint(g);
             if(flag){
+                System.out.println("paint1");
             g.drawImage(Icono,this.getX(),this.getY(),this);
-            g.drawImage(b.getImage(),b.getX(),b.getY(),this);
+            g.drawImage(b.getImage(),b.getX()+7,b.getY(),this);
             }else{
+                System.out.println("paint2");
                 g.drawImage(Icono,this.getX(),this.getY(),this);
             }
             
@@ -209,15 +218,16 @@ public class PlayFrame{
                 switch (key) {
                     case KeyEvent.VK_RIGHT:
                         System.out.println("derecha");
-                        if(getX() <= 760){
+                        if(getX() <= 379){
                         setX(5);}
                         repaint();
                         
                         break;
                     case KeyEvent.VK_LEFT:
                         System.out.println("izquierda");
-                        if(getY() >= 5){
+                        if(getX() >= 6){
                         setX(-5);}
+                        revalidate();
                         repaint(); 
                         break;
                     case KeyEvent.VK_SPACE:
@@ -243,16 +253,19 @@ public class PlayFrame{
              @Override
              public void run(){
                 System.out.println("space");
-                b = new Bullet();
+                Bullet x = new Bullet();
+                b = x;
                 b.setX(getX());
                 flag = true;
-                while(b.getY() != 0){
+                while(b.getY() != b.getposY2()){
                     b.setY(-5);
+                    repaint();
                     try {
-                        Shoot.sleep(100);
+                        Shoot.sleep(20);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    revalidate();
                     repaint();
                                                       
                     }

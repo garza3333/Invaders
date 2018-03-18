@@ -14,9 +14,15 @@ public class Ship {
     private int life,id;
     private boolean boss;
  
-    public Ship(){
-        this.next = this.previous = null;
+    public Ship(int i){
         
+        this(i,1);
+        
+    }
+    public Ship(int i , int l){
+        this.next = this.previous = null;
+        this.id = i;
+        this.life = l;
     }
     /**
      * Enlaza un nodo a otro

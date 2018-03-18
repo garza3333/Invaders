@@ -18,10 +18,11 @@ import java.awt.image.ImageProducer;
 public class Bullet{
     private final Image bullet; 
     private int posX;
-    private int posY;
+    private int posY,posY2;
     public Bullet(){
         
-        this.posY = 510;
+        this.posY = 250;
+        this.posY2 = -200;
         this.bullet = Toolkit.getDefaultToolkit().getImage("Images/bullet.png");
     }
     public int getX(){
@@ -29,6 +30,9 @@ public class Bullet{
     }
     public int getY(){
         return this.posY;
+    }
+    public int getposY2(){
+        return this.posY2;
     }
     public Image getImage(){
         return this.bullet;

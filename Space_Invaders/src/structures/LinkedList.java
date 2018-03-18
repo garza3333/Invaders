@@ -62,9 +62,14 @@ public class LinkedList {
     }
     private void del(Ship n){
         Ship temp = this.head;
-        while(temp.getNext().getId() != n.getId()){
+        while(temp.getNext() != null){
+            if(temp.getNext().getId() == n.getId()){
+                
+                temp.setNext(temp.getNext().getNext());
+                break;
+            }
             temp = temp.getNext();
-        }temp.setNext(temp.getNext().getNext());
+        }
     }
     
 }

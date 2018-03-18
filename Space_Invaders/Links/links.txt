@@ -1,0 +1,8 @@
+com darle funciones a las teclas
+
+http://franvarvil.blogspot.com/2013/07/keylistener-programacion-java.html
+https://docs.oracle.com/javase/7/docs/api/java/awt/event/KeyListener.html
+
+threads 
+https://docs.oracle.com/javase/tutorial/essential/concurrency/runthread.html
+http://tutorials.jenkov.com/java-concurrency/creating-and-starting-threads.html

@@ -40,6 +40,7 @@ public class DoublyLinkedList extends LinkedList{
             }
             temp.setNext(n);
             n.setPrevious(temp);
+            this.tail = n;
         }
     }
     
