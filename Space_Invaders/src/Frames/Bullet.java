@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Frames;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 /**
  *
- * @author Curso
+ * @author Daniel
  */
 public class Bullet{
     private final Image bullet; 
@@ -23,7 +16,7 @@ public class Bullet{
         
         this.posY = 250;
         this.posY2 = -200;
-        this.bullet = Toolkit.getDefaultToolkit().getImage("Images/bullet.png");
+        this.bullet = Toolkit.getDefaultToolkit().getImage("Images/bullet2.jpg");
     }
     public int getX(){
         return this.posX;

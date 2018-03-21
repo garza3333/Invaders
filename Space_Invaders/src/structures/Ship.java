@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package structures;
 
 /**
  *
- * @author curso
+    * @author Daniel
  */
 public class Ship {
     private Ship next,previous;
@@ -23,6 +19,8 @@ public class Ship {
         this.next = this.previous = null;
         this.id = i;
         this.life = l;
+        
+        
     }
     /**
      * Enlaza un nodo a otro
@@ -72,6 +70,7 @@ public class Ship {
     public Ship getPrevious(){
         return this.previous;
     }
+
     
     
 }

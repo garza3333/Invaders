@@ -1,19 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package structures;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
 public class LinkedList {
-    protected int size;
+    protected int size,posX,posY;
     protected Ship head,tail;
     public LinkedList(){
         this.head = this.tail = null;
+        this.posX = this.posY = 0;
     }
     /**
      * Retorna true en caso de que head sea null , de lo contrario true
@@ -50,6 +47,24 @@ public class LinkedList {
     public Ship getTail(){
         return this.tail;
     }
+    
+    
+    
+    public int getPosX(){
+        return this.posX;
+    }
+    public int getPosY(){
+        return this.posY;
+    }
+    public void setPosX(int x){
+        this.posX = x;
+    }
+    public void setPosY(int y){
+        this.posY = y;
+    }
+    
+    
+    
     private void ad(Ship n){
         if(isEmpty()){
             this.head=this.tail = n;
