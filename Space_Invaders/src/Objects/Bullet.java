@@ -1,6 +1,8 @@
 
-package Frames;
+package Objects;
 
+import java.awt.Canvas;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -11,11 +13,11 @@ import java.awt.Toolkit;
 public class Bullet{
     private final Image bullet; 
     private int posX;
-    private int posY,posY2;
-    public Bullet(){
-        
-        this.posY = 250;
-        this.posY2 = -200;
+    private int posY;
+    private final Canvas canvas;
+    
+    public Bullet(Canvas canvas){
+        this.canvas = canvas;
         this.bullet = Toolkit.getDefaultToolkit().getImage("Images/bullet2.jpg");
     }
     public int getX(){
@@ -24,9 +26,7 @@ public class Bullet{
     public int getY(){
         return this.posY;
     }
-    public int getposY2(){
-        return this.posY2;
-    }
+    
     public Image getImage(){
         return this.bullet;
     }
@@ -36,9 +36,12 @@ public class Bullet{
     public void setY(int y){
         this.posY += y;
     }
-
- 
-
-    
+    public void draw(Graphics2D g){
+        g.drawImage(this.getImage(),this.posX,this.posY,this.canvas);
+    }
+    public void update(int x , int y){
+        this.posX = x;
+        this.posY = y;
+    }
 
 }

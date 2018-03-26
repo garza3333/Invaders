@@ -3,6 +3,8 @@ package Frames;
 
 
 
+import Objects.AbstractFactory;
+import Objects.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import static java.awt.Color.BLACK;
@@ -30,7 +32,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import structures.*;
-import Frames.AbstractFactory.*;
+import Objects.AbstractFactory.*;
+import java.awt.BufferCapabilities;
+import java.awt.Canvas;
+import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
 
 /**
  *
@@ -42,11 +48,12 @@ public class PlayFrame{
     private final JFrame v = new JFrame();
     private Color bg;
     private Font fontTitle;
+    public static myCanvas canvas;
     
     
     
     public PlayFrame(){
-        this.bg = new Color(120,120,114);
+        this.bg = new Color(0,0,0);
  try {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
         
@@ -69,7 +76,7 @@ public class PlayFrame{
         
         
         
-        myCanvas canvas = new myCanvas();
+        canvas = new myCanvas();
 
         
         JPanel controlPanel = new JPanel(); 
@@ -142,7 +149,7 @@ public class PlayFrame{
         
         JPanel fondo = new JPanel();
 
-        fondo.setPreferredSize(new Dimension(800,1000));
+        fondo.setPreferredSize(new Dimension(800,1200));
         fondo.setBackground(this.bg);
  
         fondo.add(canvas);
@@ -158,64 +165,114 @@ public class PlayFrame{
         v.repaint();
         
         v.setVisible(true);
+        canvas.start();
+        
         
     }
     
-    private class myCanvas extends JComponent{
-        private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/spaceship64bits.png");
+    private class myCanvas extends Canvas implements Runnable{
+     
+       
         
-        private  int shipX = 200;  //384 limite derecho //200 pos nave
-        private final int shipY = 250; // limite de naves enemigas //500 en y
-        private int flag = -2;
-        private Bullet b;
         
-        private Basic rowBasic;
-        private ShipA rowA;
-        private ShipB rowB;
-        private ShipC rowC;
-        private ShipD rowD;
-        private ShipE rowE;
+        private  MainShip mainShip;
+        private boolean running;
+        private Thread thread;
+
+       
+        
+//        private Basic rowBasic;
+//        private ShipA rowA;
+//        private ShipB rowB;
+//        private ShipC rowC;
+//        private ShipD rowD;
+//        private ShipE rowE;
         
         public myCanvas(){
-        
-            setPreferredSize(new Dimension(800,1000));
-//            setBounds(0,0,800,100);
-
-            addKeyListener(new Key());
             
+        
+            setPreferredSize(new Dimension(800,1200));
+            this.running = false;
+
+            mainShip = new MainShip(this);
+            
+            
+            addKeyListener(mainShip);
             setFocusable(true);
             
             setVisible(true);
 //            setOpaque(true);
         }
-        @Override
-        public void paint(Graphics g){
-            int espacio = 0;
-            super.paint(g);
-            switch(flag){
-                
-                case -1:
-                
-                    g.drawImage(Icono,this.getX(),this.getY(),this);
-                    g.drawImage(b.getImage(),b.getX()+7,b.getY(),this);
-                    break;
-                
-                case -2:
-                    g.drawImage(Icono,this.getX(),this.getY(),this);
-                    
-                    break;
-                
-                case 0:
-                    g.drawImage(Icono,this.getX(),this.getY(),this);
-//                    g.drawImage(b.getImage(),b.getX()+7,b.getY(),this);
-                    Ship temp = rowBasic.getList().getHead();
-                    while(temp!= null){
-                        g.drawImage(rowBasic.getImageShip(),espacio,0,this);
-                        espacio+=40;
-                        temp = temp.getNext();
-                    }espacio = 0;
-                    break;
+
+        
+        public synchronized void start(){
+            if(running){
+                return;
             }
+            running = true;
+            thread = new Thread((Runnable) this);
+            thread.start();
+            
+        }
+        public synchronized void stop() throws InterruptedException{
+            if(running){
+                return;
+            }
+            running = false;
+            thread.join();
+        }
+        
+        @Override
+        public void run(){
+            
+            this.createBufferStrategy(3);
+            BufferStrategy bs = this.getBufferStrategy();
+            
+            while(running){
+                
+//                System.out.println("running");
+                this.draw(bs);
+            }
+            
+//        public void paint(Graphics g){
+////            int espacio = 0;
+//            super.paint(g);
+      
+                
+//                case 0:
+//                    g.drawImage(Icono,this.getX(),this.getY(),this);
+////                    g.drawImage(b.getImage(),b.getX()+7,b.getY(),this);
+//                    Ship temp = rowBasic.getList().getHead();
+//                    while(temp!= null){
+//                        g.drawImage(rowBasic.getImageShip(),espacio,0,this);
+//                        espacio+=40;
+//                        temp = temp.getNext();
+//                    }espacio = 0;
+//                    break;
+            }
+        public void draw(BufferStrategy bs){
+            
+            do{
+                do{
+                    Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+                    g.setColor(Color.BLACK);
+                    g.fillRect(0,0,800,1200);
+                    
+                    mainShip.draw(g);
+                    mainShip.update();
+                    
+                    
+                    g.dispose();
+                    
+                }while(bs.contentsRestored());
+                bs.show();
+            }while(bs.contentsLost());
+                
+        }
+        public void update(double delta){
+            
+        }
+                
             
            
            
@@ -223,112 +280,47 @@ public class PlayFrame{
             
         }
         
-        @Override
-        public int getX(){
-            return this.shipX;
-        }
-        @Override
-        public int getY(){
-            return this.shipY;
-        }
-        public void setX(int x){
-            this.shipX += x;
-        }
+
         
-        
-        
-        
-         class Key implements KeyListener{
-            
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-                switch (key) {
-                    case KeyEvent.VK_RIGHT:
-                       Thread r;
-                       r = new Thread( () ->{
-                           if(getX() <= 379){
-                               setX(5);}
-                           repaint();
-                       });
-                        r.start();
-                        break;
-                    
-                        
-                       
-                    case KeyEvent.VK_LEFT:
-                       Thread l;
-                       l = new Thread(() ->{
-                        if(getX() >= 6){
-                        setX(-5);}
-                        revalidate();
-                        repaint(); });
-                       l.start();
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        Shoot s = new Shoot();
-                        s.start();
-                        Start start = new Start();
-                        start.start();
-                     
-                        break;
-                        
-                    default:
-                        break;
-                }}
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                
-            }
-
-
-         }
-         class Shoot extends Thread{
-             @Override
-             public void run(){
-                
-                Bullet x = new Bullet();
-                b = x;
-                b.setX(getX());
-                flag = -1;
-                while(b.getY() != b.getposY2()){
-                    b.setY(-5);
-                    repaint();
-                    try {
-                        Shoot.sleep(20);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    revalidate();
-                    repaint();
-                                                      
-                    }
-             }
-         }
+//         class Shoot extends Thread{
+//             @Override
+//             public void run(){
+//                
+//                Bullet x = new Bullet();
+//                b = x;
+//                b.setX(getX());
+//                flag = -1;
+//                while(b.getY() != b.getposY2()){
+//                    b.setY(-5);
+//                    repaint();
+//                    try {
+//                        Shoot.sleep(20);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    revalidate();
+//                    repaint();
+//                                                      
+//                    }
+//             }
+//         }
          
     
     
-    public class Start extends Thread{
-        private final AbstractFactory factory;;
-
-        
-        
-        
-        public Start(){
-            this.factory = new AbstractFactory();
-            
-        }
-    @Override
-    public void run(){
-        rowBasic = (Basic) factory.makeRowShips(0);
-        flag = 0;
+//    public class Start extends Thread{
+//        private final AbstractFactory factory;;
+//
+//        
+//        
+//        
+//        public Start(){
+//            this.factory = new AbstractFactory();
+//            
+//        }
+//    @Override
+//    public void run(){
+//        rowBasic = (Basic) factory.makeRowShips(0);
+//        flag = 0;
 //        int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
 //        switch(randomNum){
 //            case 0:
@@ -362,13 +354,13 @@ public class PlayFrame{
         
          
             }
-        }
-    
-    }
+//        }
+//    
+//    }
 
    
     
     
 
    
-}
+//}
