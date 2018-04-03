@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Objects;
 
+import java.awt.Canvas;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import structures.*;
 
 /**
@@ -14,8 +14,9 @@ import structures.*;
  * @author Curso
  */
 public class AbstractFactory {
+//    private static Canvas canvas;
     public AbstractFactory(){
-        
+      
     }
     public Object makeRowShips(int type){
             return this.makeRS(type);
@@ -65,12 +66,19 @@ public class AbstractFactory {
         }
     }
     
-    public static class Basic{
+    public static class Basic extends Thread{
         private final LinkedList list;
+        private Graphics2D graphics;
+        private Canvas canvas;
         protected  Image ship; 
-
+        int posX,posY;
+        
         public Basic(){
-            this.setImageShip("Images/basic.png");
+            
+            posX = 0;
+            posY = 0;
+            setImageShip("Images/basic.png");
+            
             list = new LinkedList();
             
             for(int i = 1; i<8 ; i++){
@@ -88,6 +96,41 @@ public class AbstractFactory {
         }
         public LinkedList getList(){
             return this.list;
+        }
+        public void setGC(Graphics2D g,Canvas c){
+            this.canvas = c;
+            this.graphics =g;
+        }
+      
+        public void draw(Graphics2D g){
+            int espacio = 0;
+            
+            Ship temp = list.getHead();
+     
+            while(temp != null){
+                System.out.println("drawBasic");
+                g.drawImage(ship,posX+espacio,posY,canvas);
+                
+                
+                espacio+=40;
+                temp = temp.getNext();
+            }
+        }
+        
+        @Override
+        public void run(){
+            System.out.println("Basic");
+            while(!this.list.isEmpty() && posY != 500){
+                System.out.println("checkout");
+                this.draw(graphics);
+                posY += 1;
+                
+                try {
+                    Basic.sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AbstractFactory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
     

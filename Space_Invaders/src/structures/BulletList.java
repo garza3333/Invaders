@@ -18,7 +18,8 @@ public class BulletList{
     
     public void add(Object o){
         this.ad(o);
-    }public NodeBullet deleteFirst(){
+    }
+    public NodeBullet deleteFirst(){
         return this.deleteF();
     }
     public NodeBullet getHead(){

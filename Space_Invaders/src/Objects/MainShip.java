@@ -21,7 +21,7 @@ import java.awt.event.KeyListener;
 public class MainShip implements KeyListener {
     private final Image ship;
     int shipX,shipY;
-    boolean right,left,space,shoot;
+    boolean right,left,space,shoot,flagS;
   
     private Bullet b;
     
@@ -75,8 +75,9 @@ public class MainShip implements KeyListener {
         if(b==null){
         b = new Bullet(component);
         }
+        if(!flagS){
         Shoot s = new Shoot();
-        s.start();
+        s.start();}
 
         }
     }
@@ -127,12 +128,13 @@ public class MainShip implements KeyListener {
 
              @Override
              public void run(){
-                
+                 System.out.println("Bullet");
                 
                 
                 b.update(shipX+8,shipY);
                 
                 shoot = true;
+                flagS = true;
                
                     
 
@@ -141,12 +143,14 @@ public class MainShip implements KeyListener {
                     b.setY(-1);
                     
                     try {
-                        Shoot.sleep(20);
+                        Shoot.sleep(1);
                     } catch (InterruptedException ex) {
                         System.out.println(ex.getMessage());
                         }
                                       
-                    }shoot = false;
+                    }
+                shoot = false;
+                flagS = false;    
                 
              }
          }    

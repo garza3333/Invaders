@@ -13,27 +13,18 @@ import static java.awt.Color.BLUE;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.Image;
 
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import structures.*;
 import Objects.AbstractFactory.*;
-import java.awt.BufferCapabilities;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -48,7 +39,7 @@ public class PlayFrame{
     private final JFrame v = new JFrame();
     private Color bg;
     private Font fontTitle;
-    public static myCanvas canvas;
+    private static myCanvas canvas;
     
     
     
@@ -174,19 +165,12 @@ public class PlayFrame{
      
        
         
-        
+        private  StartEnemy enemy;
         private  MainShip mainShip;
         private boolean running;
         private Thread thread;
-
+        private boolean ff;
        
-        
-//        private Basic rowBasic;
-//        private ShipA rowA;
-//        private ShipB rowB;
-//        private ShipC rowC;
-//        private ShipD rowD;
-//        private ShipE rowE;
         
         public myCanvas(){
             
@@ -195,8 +179,8 @@ public class PlayFrame{
             this.running = false;
 
             mainShip = new MainShip(this);
-            
-            
+            enemy = new StartEnemy();
+            ff = true;
             addKeyListener(mainShip);
             setFocusable(true);
             
@@ -206,6 +190,7 @@ public class PlayFrame{
 
         
         public synchronized void start(){
+
             if(running){
                 return;
             }
@@ -224,6 +209,8 @@ public class PlayFrame{
         
         @Override
         public void run(){
+            
+            
             
             this.createBufferStrategy(3);
             BufferStrategy bs = this.getBufferStrategy();
@@ -261,6 +248,12 @@ public class PlayFrame{
                     mainShip.draw(g);
                     mainShip.update();
                     
+                    if(ff){
+                    ff=false;
+                    enemy.update(g,canvas);
+                    enemy.start();
+                    
+                    }
                     
                     g.dispose();
                     
@@ -281,86 +274,88 @@ public class PlayFrame{
         }
         
 
+
+    public class StartEnemy extends Thread{
         
-//         class Shoot extends Thread{
-//             @Override
-//             public void run(){
-//                
-//                Bullet x = new Bullet();
-//                b = x;
-//                b.setX(getX());
-//                flag = -1;
-//                while(b.getY() != b.getposY2()){
-//                    b.setY(-5);
-//                    repaint();
-//                    try {
-//                        Shoot.sleep(20);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(PlayFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    revalidate();
-//                    repaint();
-//                                                      
-//                    }
-//             }
-//         }
-         
     
+        private final AbstractFactory factory;;
+//        private int high = 0, limit = 500;
+        private Graphics2D g;
+        private Canvas c;
+        private Basic rowBasic;
+
+        private ShipA rowA;
+        private ShipB rowB;
+        private ShipC rowC;
+        private ShipD rowD;
+        private ShipE rowE;
+        
+        
+        
+        
+        public StartEnemy(){
+   
+            this.factory = new AbstractFactory();
+            
+        }
+        public void update(Graphics2D g, Canvas canvas){
+            this. c = canvas;
+            this.g = g;
+           
+        }
+
+    @Override
+    public void run(){
+        System.out.println("StartEnemy");
     
-//    public class Start extends Thread{
-//        private final AbstractFactory factory;;
-//
-//        
-//        
-//        
-//        public Start(){
-//            this.factory = new AbstractFactory();
-//            
-//        }
-//    @Override
-//    public void run(){
-//        rowBasic = (Basic) factory.makeRowShips(0);
-//        flag = 0;
+  
+       
+        rowBasic = (Basic) factory.makeRowShips(0);
+        rowBasic.setGC(g,c);
+        rowBasic.start();
+  
+
 //        int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
 //        switch(randomNum){
 //            case 0:
 //                rowBasic = (Basic) factory.makeRowShips(randomNum);
-//                flag = 0;
+//
 //
 //                break;
 //            case 1:
 //                rowA = (ShipA) factory.makeRowShips(randomNum);
-//                flag = 1;
+//         
 //                break;
 //            case 2:
 //                rowB = (ShipB) factory.makeRowShips(randomNum);
-//                flag = 2;
+//             
 //                break;
 //            case 3:
 //                rowC = (ShipC) factory.makeRowShips(randomNum);
-//                flag = 3;
+//     
 //                break;
 //            case 4:
 //                rowD = (ShipD) factory.makeRowShips(randomNum);
-//                flag = 4;
+//          
 //                break;
 //            case 5:
 //                rowE = (ShipE) factory.makeRowShips(randomNum);
-//                flag = 5;
+//               
 //                break;
 //        }
+            }
+    
+    }
+
+   
+    
+    
+
+   
+}
         
         
         
          
-            }
-//        }
-//    
-//    }
+            
 
-   
-    
-    
-
-   
-//}
