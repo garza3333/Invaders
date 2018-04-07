@@ -78,7 +78,7 @@ public class LinkedList {
     private void del(Ship n){
         Ship temp = this.head;
         while(temp.getNext() != null){
-            if(temp.getNext().getId() == n.getId()){
+            if(temp.getNext().getValue().getID() == n.getValue().getID()){
                 
                 temp.setNext(temp.getNext().getNext());
                 break;

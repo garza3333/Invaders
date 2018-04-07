@@ -1,24 +1,21 @@
 
 package structures;
 
+import AbstractEnemy.Enemy;
+
 /**
  *
     * @author Daniel
  */
 public class Ship {
     private Ship next,previous;
-    private int life,id;
-    private boolean boss;
+    private final Enemy value;
+    
  
-    public Ship(int i){
-        
-        this(i,1);
-        
-    }
-    public Ship(int i , int l){
+    public Ship(Enemy e){
+        this.value = e;
         this.next = this.previous = null;
-        this.id = i;
-        this.life = l;
+      
         
         
     }
@@ -36,26 +33,8 @@ public class Ship {
     public Ship getNext(){
         return this.next;
     }
-    /**
-     * Retorna el atributo life
-     * @return 
-     */
-    public int getLife(){
-        return this.life;
-    }
-    /**
-     * Cambia el valor del atributo boss a true
-     */
-    public void setBoss(){
-        this.boss = true;
-    }
-    /**
-     * Retorna el valor del atributo id;
-     * @return 
-     */
-    public int getId(){
-        return this.id;
-    }
+
+
     /**
      * Enlaza un nodo a un nodo anterior
      * @param n 
@@ -69,6 +48,10 @@ public class Ship {
      */
     public Ship getPrevious(){
         return this.previous;
+    }
+    
+    public Enemy getValue(){
+        return this.value;
     }
 
     

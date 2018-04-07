@@ -3,7 +3,9 @@ package Frames;
 
 
 
-import Objects.AbstractFactory;
+//import Objects.AbstractFactory;
+import AbstractHilera.HileraB;
+import FactoryHilera.FactoryHileraB;
 import Objects.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,7 +26,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import Objects.AbstractFactory.*;
+//import Objects.AbstractFactory.*;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -165,7 +167,9 @@ public class PlayFrame{
      
        
         
-        private  StartEnemy enemy;
+//        private  StartEnemy enemy;
+        private FactoryHileraB factoryB;
+        HileraB basic;
         private  MainShip mainShip;
         private boolean running;
         private Thread thread;
@@ -179,7 +183,9 @@ public class PlayFrame{
             this.running = false;
 
             mainShip = new MainShip(this);
-            enemy = new StartEnemy();
+            factoryB = new FactoryHileraB();
+            
+//            enemy = new StartEnemy();
             ff = true;
             addKeyListener(mainShip);
             setFocusable(true);
@@ -214,6 +220,7 @@ public class PlayFrame{
             
             this.createBufferStrategy(3);
             BufferStrategy bs = this.getBufferStrategy();
+            basic = (HileraB) factoryB.makeRow();
             
             while(running){
                 
@@ -247,13 +254,16 @@ public class PlayFrame{
                     
                     mainShip.draw(g);
                     mainShip.update();
+                    basic.draw(this, g);
+                    basic.update();
                     
-                    if(ff){
-                    ff=false;
-                    enemy.update(g,canvas);
-                    enemy.start();
                     
-                    }
+//                    if(ff){
+//                    ff=false;
+//                    enemy.update(g,canvas);
+//                    enemy.start();
+//                    
+//                    }
                     
                     g.dispose();
                     
@@ -275,44 +285,44 @@ public class PlayFrame{
         
 
 
-    public class StartEnemy extends Thread{
+//    public class StartEnemy extends Thread{
+//        
+//    
+//        private final AbstractFactory factory;;
+////        private int high = 0, limit = 500;
+//        private Graphics2D g;
+//        private Canvas c;
+//        private Basic rowBasic;
+//
+//        private ShipA rowA;
+//        private ShipB rowB;
+//        private ShipC rowC;
+//        private ShipD rowD;
+//        private ShipE rowE;
         
-    
-        private final AbstractFactory factory;;
-//        private int high = 0, limit = 500;
-        private Graphics2D g;
-        private Canvas c;
-        private Basic rowBasic;
+        
+        
+        
+//        public StartEnemy(){
+//   
+//            this.factory = new AbstractFactory();
+//            
+//        }
+//        public void update(Graphics2D g, Canvas canvas){
+//            this. c = canvas;
+//            this.g = g;
+//           
+//        }
 
-        private ShipA rowA;
-        private ShipB rowB;
-        private ShipC rowC;
-        private ShipD rowD;
-        private ShipE rowE;
-        
-        
-        
-        
-        public StartEnemy(){
-   
-            this.factory = new AbstractFactory();
-            
-        }
-        public void update(Graphics2D g, Canvas canvas){
-            this. c = canvas;
-            this.g = g;
-           
-        }
-
-    @Override
-    public void run(){
-        System.out.println("StartEnemy");
-    
-  
-       
-        rowBasic = (Basic) factory.makeRowShips(0);
-        rowBasic.setGC(g,c);
-        rowBasic.start();
+//    @Override
+//    public void run(){
+//        System.out.println("StartEnemy");
+//    
+//  
+//       
+//        rowBasic = (Basic) factory.makeRowShips(0);
+//        rowBasic.setGC(g,c);
+//        rowBasic.start();
   
 
 //        int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
@@ -343,9 +353,9 @@ public class PlayFrame{
 //               
 //                break;
 //        }
-            }
-    
-    }
+//            }
+//    
+//    }
 
    
     
