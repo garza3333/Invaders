@@ -255,7 +255,7 @@ public class PlayFrame{
                     mainShip.draw(g);
                     mainShip.update();
                     basic.draw(this, g);
-                    basic.update();
+//                    basic.update();
                     
                     
 //                    if(ff){

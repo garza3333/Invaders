@@ -9,6 +9,8 @@ import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import structures.LinkedList;
 import structures.Ship;
 
@@ -20,6 +22,7 @@ public class HileraB implements AbstractHilera{
     private int x,y;
     private LinkedList l;
     private FactoryBasic fb;
+    private boolean flag;
 
 
     @Override
@@ -30,6 +33,7 @@ public class HileraB implements AbstractHilera{
         this.l = new LinkedList();
         int cont = 0;
         int pos = 250;
+        flag = true;
         while(cont < 8){
             
             Enemy e = fb.createEnemy(pos, 0, 1, false, 3,cont);
@@ -38,6 +42,11 @@ public class HileraB implements AbstractHilera{
             
             cont+=1;
             
+        }
+        if(flag){
+            flag = false;
+            Moviment m = new Moviment();
+            m.start();
         }
         
         
@@ -61,7 +70,7 @@ public class HileraB implements AbstractHilera{
         Ship temp = this.l.getHead();
         int  cont = 0;
         while(temp!=null){
-            g.drawImage(temp.getValue().getImage(),temp.getValue().getX()+cont,temp.getValue().getY(),c);
+            g.drawImage(temp.getValue().getImage(),temp.getValue().getX()+cont,y,c);
             cont+= 40;
             temp = temp.getNext();
             
@@ -84,8 +93,22 @@ public class HileraB implements AbstractHilera{
 
     @Override
     public void update() {
-        this.y+=10;
+        this.y+=1;
     }
+    
+    
+   public class Moviment extends Thread{
+       @Override
+       public void run(){
+           while(true){
+           update();
+           try {
+               Moviment.sleep(10);
+           } catch (InterruptedException ex) {
+               Logger.getLogger(HileraB.class.getName()).log(Level.SEVERE, null, ex);
+           }}
+       }
+   }
 
     
      
