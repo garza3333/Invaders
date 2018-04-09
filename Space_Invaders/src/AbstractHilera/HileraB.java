@@ -22,26 +22,30 @@ public class HileraB implements AbstractHilera{
     private int x,y;
     private LinkedList l;
     private FactoryBasic fb;
-    private boolean flag;
+    private boolean flag,flagMove;
 
 
     @Override
     public void init() {
-        setPosX(0);
+        setPosX(250);
         setPosY(0);
         this.fb = new FactoryBasic();
         this.l = new LinkedList();
         int cont = 0;
-        int pos = 250;
+        
+        
         flag = true;
-        while(cont < 8){
+        flagMove = true;
+        int pos = 0;
+        while(cont < 10){
             
-            Enemy e = fb.createEnemy(pos, 0, 1, false, 3,cont);
+            Enemy e = fb.createEnemy(x+pos, 0, 1, false, 3,cont);
+            
             Ship ship = new Ship(e);
             l.add(ship);
             
             cont+=1;
-            
+            pos+=40;
         }
         if(flag){
             flag = false;
@@ -68,10 +72,11 @@ public class HileraB implements AbstractHilera{
     @Override
     public void draw(Canvas c , Graphics2D g) {
         Ship temp = this.l.getHead();
-        int  cont = 0;
+        
         while(temp!=null){
-            g.drawImage(temp.getValue().getImage(),temp.getValue().getX()+cont,y,c);
-            cont+= 40;
+            
+            g.drawImage(temp.getValue().getImage(),temp.getValue().getX(),temp.getValue().getY(),c);
+            
             temp = temp.getNext();
             
               
@@ -93,8 +98,49 @@ public class HileraB implements AbstractHilera{
 
     @Override
     public void update() {
-        this.y+=1;
-    }
+        
+        
+        if(flagMove && l.getTail().getValue().getX()<=750){
+            if(l.getTail().getValue().getX()== 750){
+            flagMove = false;
+            Ship temp  = l.getHead();
+            y += 20;
+            while(temp!= null){
+                temp.getValue().setY(y);
+                temp = temp.getNext();
+                }     
+        }
+            Ship temp = l.getHead();
+            while(temp!=null){
+                   temp.getValue().setX(temp.getValue().getX()+2);
+                   temp = temp.getNext();
+            }
+        }else if(!flagMove && l.getHead().getValue().getX()>=10){
+            
+            if(l.getHead().getValue().getX()== 10){
+            flagMove = true;
+            
+            
+            
+                    
+            Ship temp  = l.getHead();
+            y += 20;
+            while(temp!= null){
+                temp.getValue().setY(y);
+                temp = temp.getNext();
+                }
+            }
+            
+            Ship temp = l.getHead();
+            while(temp!=null){
+                temp.getValue().setX(temp.getValue().getX()-2);
+                temp = temp.getNext();
+            }
+        }
+
+        }
+
+    
     
     
    public class Moviment extends Thread{

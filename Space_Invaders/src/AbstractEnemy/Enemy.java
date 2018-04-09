@@ -6,6 +6,7 @@
 package AbstractEnemy;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 /**
  *
@@ -22,6 +23,7 @@ public interface Enemy {
     public void setSpeed(int s);
     public void setImage(Image i);
     public void setID(int id);
+    public void setPosColition(Rectangle r);
     
     
     
@@ -34,6 +36,7 @@ public interface Enemy {
     public int getSpeed();
     public Image getImage();
     public int getID();
+    public Rectangle getPosColition();
     
     
     

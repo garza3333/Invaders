@@ -6,6 +6,7 @@
 package AbstractEnemy;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 /**
@@ -16,6 +17,7 @@ public class Basic implements Enemy{
     private  Image image;
     private int posX,posY,speed,life,id;
     private boolean boss;
+    private Rectangle posColition;
     
     public Basic(){
         this.image = Toolkit.getDefaultToolkit().getImage("Images/basic.png");
@@ -29,6 +31,7 @@ public class Basic implements Enemy{
         setSpeed(s);
         setBoss(b);
         setImage(image);
+        this.posColition = new Rectangle(x,y,x+32,y+32);
         
     }
     
@@ -108,6 +111,16 @@ public class Basic implements Enemy{
     @Override
     public int getID() {
         return this.id;
+    }
+
+    @Override
+    public void setPosColition(Rectangle r) {
+        this.posColition = r;
+    }
+
+    @Override
+    public Rectangle getPosColition() {
+        return this.posColition;
     }
 
     
