@@ -10,13 +10,13 @@ import AbstractHilera.AbstractHilera;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
 public interface AbstractFactoryHilera {
     
     public void init();
     
-    public AbstractHilera makeRow();
+    public AbstractHilera makeRow(String h);
     
 
     

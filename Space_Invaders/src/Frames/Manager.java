@@ -6,6 +6,10 @@ package Frames;
  * @author Daniel
  */
 public class Manager {
+    private MainFrame main;
+    private DataFrame data;
+    private UsserFrame user;
+    private PlayFrame play;
     
     public Manager(){
             
@@ -16,28 +20,39 @@ public class Manager {
     public void show(String n){
         switch(n){
             case "main":
-                MainFrame m = new MainFrame();         
+                main = new MainFrame();         
                 break;
                 
                 
             case "data":  
-                DataFrame d = new DataFrame();
+                data = new DataFrame();
                 break;
             
             case "start":
-                UsserFrame u = new UsserFrame();
+                user = new UsserFrame();
                 break;
             
             case "play":
-                PlayFrame p = new PlayFrame();
+                play = new PlayFrame();
                 break;
                 
                 
         }
-                
-                    
-                    
-                
+        
+
+                  
     }
-    
+        public MainFrame getMainFrame(){
+            return this.main;
+        }    
+        public DataFrame getDataFrame(){
+            return this.data;
+            
+        }
+        public UsserFrame getUsserFrame(){
+            return this.user;
+        }
+       public PlayFrame getPlayFrame(){
+           return this.play;
+       }
 }

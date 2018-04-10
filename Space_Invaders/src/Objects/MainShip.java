@@ -32,7 +32,7 @@ public class MainShip implements KeyListener {
         this.shipX = 400; //790 limite derecho //400 pos nave
         this.shipY = 500; // limite de naves enemigas //500 en y
         this.component = canvas;
-        this.b = null;
+        this.b = new Bullet(component);
         
         
     }
@@ -128,7 +128,7 @@ public class MainShip implements KeyListener {
 
              @Override
              public void run(){
-                 System.out.println("Bullet");
+                 
                 
                 
                 b.update(shipX+8,shipY);

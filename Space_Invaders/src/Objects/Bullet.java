@@ -39,6 +39,11 @@ public class Bullet{
     public void setY(int y){
         this.posY += y;
     }
+    
+    
+    public Rectangle getR(){
+        return this.r;
+    }
     public void draw(Graphics2D g){
         g.drawImage(this.getImage(),this.posX,this.posY,this.canvas);
     }

@@ -14,7 +14,7 @@ public class DoublyCircularList extends LinkedList{
      * @param n 
      */
     @Override
-    public void add(Ship n){
+    public void add(Node n){
         this.ad(n);
     }
     
@@ -23,7 +23,7 @@ public class DoublyCircularList extends LinkedList{
     
     
     
-    private void ad(Ship n){
+    private void ad(Node n){
         if(isEmpty()){
             this.head = this.tail = n;
         }else{

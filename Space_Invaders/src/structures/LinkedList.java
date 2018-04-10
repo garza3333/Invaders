@@ -7,7 +7,7 @@ package structures;
  */
 public class LinkedList {
     protected int size,posX,posY;
-    protected Ship head,tail;
+    protected Node head,tail;
     public LinkedList(){
         this.head = this.tail = null;
         this.posX = this.posY = 0;
@@ -23,28 +23,28 @@ public class LinkedList {
      * añade un nuevo nodo a la lista
      * @param n nodo a añadir
      */
-    public void add(Ship n){
+    public void add(Node n){
         this.ad(n);
     }
     /**
      * Elimina un nodo de la lista dependiendo del id que tenga
      * @param n 
      */
-    public void delete(Ship n){
+    public void delete(Node n){
         this.del(n);
     }
     /**
      * Retorna el atributo head de la lista 
      * @return 
      */
-    public Ship getHead(){
+    public Node getHead(){
         return this.head;
     }
     /**
      * Retorna el atributo tail de la lista
      * @return 
      */
-    public Ship getTail(){
+    public Node getTail(){
         return this.tail;
     }
     
@@ -65,7 +65,7 @@ public class LinkedList {
     
     
     
-    private void ad(Ship n){
+    private void ad(Node n){
         if(isEmpty()){
             this.head=this.tail = n;
         }else{
@@ -75,8 +75,8 @@ public class LinkedList {
         }
         size++;
     }
-    private void del(Ship n){
-        Ship temp = this.head;
+    private void del(Node n){
+        Node temp = this.head;
         while(temp.getNext() != null){
             if(temp.getNext().getValue().getID() == n.getValue().getID()){
                 

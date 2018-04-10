@@ -5,21 +5,20 @@
  */
 package FactoryEnemies;
 
-import AbstractEnemy.Basic;
+import AbstractEnemy.Enemy_Basic;
 import AbstractEnemy.Enemy;
-import FactoryEnemies.AbstractShip;
 import java.awt.Image;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
 public class FactoryBasic implements AbstractShip{
 
     @Override
-    public Enemy createEnemy( int x, int y, int l, boolean b, int s,int id){
-        Basic e = new Basic();
-        e.init( x, y, l, b, s,id);
+    public Enemy createEnemy(Image i, int x, int y, int l, boolean b, int s,int id){
+        Enemy_Basic e = new Enemy_Basic();
+        e.init(i, x, y, l, b, s,id);
         return e;
     }
     

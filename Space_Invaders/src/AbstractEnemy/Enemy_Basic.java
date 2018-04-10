@@ -7,24 +7,23 @@ package AbstractEnemy;
 
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
-public class Basic implements Enemy{
+public class Enemy_Basic implements Enemy{
     private  Image image;
     private int posX,posY,speed,life,id;
     private boolean boss;
     private Rectangle posColition;
     
-    public Basic(){
-        this.image = Toolkit.getDefaultToolkit().getImage("Images/basic.png");
+    public Enemy_Basic(){
+        
     }
 
     @Override
-    public void init( int x, int y, int l, boolean b, int s, int id) {
+    public void init( Image image ,int x, int y, int l, boolean b, int s, int id) {
         setX(x);
         setY(y);
         setLife(l);
@@ -122,6 +121,12 @@ public class Basic implements Enemy{
     public Rectangle getPosColition() {
         return this.posColition;
     }
+
+    @Override
+    public void update(int x, int y) {
+        this.posColition = new Rectangle(x,y,x+32,y+32);
+    }
+    
 
     
 }

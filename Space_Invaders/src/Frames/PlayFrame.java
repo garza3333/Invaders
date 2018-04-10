@@ -3,9 +3,9 @@ package Frames;
 
 
 
-//import Objects.AbstractFactory;
-import AbstractHilera.HileraB;
-import FactoryHilera.FactoryHileraB;
+
+import AbstractHilera.*;
+import FactoryHilera.FactoryHilera;
 import Objects.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,7 +26,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//import Objects.AbstractFactory.*;
+
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -41,7 +41,7 @@ public class PlayFrame{
     private final JFrame v = new JFrame();
     private Color bg;
     private Font fontTitle;
-    private static myCanvas canvas;
+    public  myCanvas canvas;
     
     
     
@@ -162,18 +162,18 @@ public class PlayFrame{
         
         
     }
+    public myCanvas getCanvas(){
+        return this.canvas;
+    }
     
-    private class myCanvas extends Canvas implements Runnable{
+    public class myCanvas extends Canvas implements Runnable{
      
-       
-        
-//        private  StartEnemy enemy;
-        private FactoryHileraB factoryB;
-        HileraB basic;
+        private FactoryHilera factory;
+        AbstractHilera hilera;
         private  MainShip mainShip;
         private boolean running;
         private Thread thread;
-        private boolean ff;
+        
        
         
         public myCanvas(){
@@ -183,15 +183,18 @@ public class PlayFrame{
             this.running = false;
 
             mainShip = new MainShip(this);
-            factoryB = new FactoryHileraB();
+            factory = new FactoryHilera();
             
-//            enemy = new StartEnemy();
-            ff = true;
+
+           
             addKeyListener(mainShip);
             setFocusable(true);
             
             setVisible(true);
-//            setOpaque(true);
+
+        }
+        public MainShip getMainShip(){
+            return this.mainShip;
         }
 
         
@@ -220,29 +223,15 @@ public class PlayFrame{
             
             this.createBufferStrategy(3);
             BufferStrategy bs = this.getBufferStrategy();
-            basic = (HileraB) factoryB.makeRow();
+            hilera = factory.makeRow("ShipC");
             
             while(running){
                 
-//                System.out.println("running");
+
                 this.draw(bs);
             }
             
-//        public void paint(Graphics g){
-////            int espacio = 0;
-//            super.paint(g);
-      
-                
-//                case 0:
-//                    g.drawImage(Icono,this.getX(),this.getY(),this);
-////                    g.drawImage(b.getImage(),b.getX()+7,b.getY(),this);
-//                    Ship temp = rowBasic.getList().getHead();
-//                    while(temp!= null){
-//                        g.drawImage(rowBasic.getImageShip(),espacio,0,this);
-//                        espacio+=40;
-//                        temp = temp.getNext();
-//                    }espacio = 0;
-//                    break;
+
             }
         public void draw(BufferStrategy bs){
             
@@ -254,16 +243,9 @@ public class PlayFrame{
                     
                     mainShip.draw(g);
                     mainShip.update();
-                    basic.draw(this, g);
-//                    basic.update();
+                    hilera.draw(this, g);
                     
                     
-//                    if(ff){
-//                    ff=false;
-//                    enemy.update(g,canvas);
-//                    enemy.start();
-//                    
-//                    }
                     
                     g.dispose();
                     
@@ -284,82 +266,6 @@ public class PlayFrame{
         }
         
 
-
-//    public class StartEnemy extends Thread{
-//        
-//    
-//        private final AbstractFactory factory;;
-////        private int high = 0, limit = 500;
-//        private Graphics2D g;
-//        private Canvas c;
-//        private Basic rowBasic;
-//
-//        private ShipA rowA;
-//        private ShipB rowB;
-//        private ShipC rowC;
-//        private ShipD rowD;
-//        private ShipE rowE;
-        
-        
-        
-        
-//        public StartEnemy(){
-//   
-//            this.factory = new AbstractFactory();
-//            
-//        }
-//        public void update(Graphics2D g, Canvas canvas){
-//            this. c = canvas;
-//            this.g = g;
-//           
-//        }
-
-//    @Override
-//    public void run(){
-//        System.out.println("StartEnemy");
-//    
-//  
-//       
-//        rowBasic = (Basic) factory.makeRowShips(0);
-//        rowBasic.setGC(g,c);
-//        rowBasic.start();
-  
-
-//        int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
-//        switch(randomNum){
-//            case 0:
-//                rowBasic = (Basic) factory.makeRowShips(randomNum);
-//
-//
-//                break;
-//            case 1:
-//                rowA = (ShipA) factory.makeRowShips(randomNum);
-//         
-//                break;
-//            case 2:
-//                rowB = (ShipB) factory.makeRowShips(randomNum);
-//             
-//                break;
-//            case 3:
-//                rowC = (ShipC) factory.makeRowShips(randomNum);
-//     
-//                break;
-//            case 4:
-//                rowD = (ShipD) factory.makeRowShips(randomNum);
-//          
-//                break;
-//            case 5:
-//                rowE = (ShipE) factory.makeRowShips(randomNum);
-//               
-//                break;
-//        }
-//            }
-//    
-//    }
-
-   
-    
-    
 
    
 }

@@ -10,11 +10,11 @@ import java.awt.Rectangle;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
 public interface Enemy {
     
-    public void init( int x , int y, int l ,boolean b, int s, int id);
+    public void init(Image image, int x , int y, int l ,boolean b, int s, int id);
     
     public void setLife(int l);
     public void setX(int x);
@@ -24,6 +24,8 @@ public interface Enemy {
     public void setImage(Image i);
     public void setID(int id);
     public void setPosColition(Rectangle r);
+    
+    public void update(int x , int y);
     
     
     

@@ -7,12 +7,12 @@ import AbstractEnemy.Enemy;
  *
     * @author Daniel
  */
-public class Ship {
-    private Ship next,previous;
+public class Node {
+    private Node next,previous;
     private final Enemy value;
     
  
-    public Ship(Enemy e){
+    public Node(Enemy e){
         this.value = e;
         this.next = this.previous = null;
       
@@ -23,14 +23,14 @@ public class Ship {
      * Enlaza un nodo a otro
      * @param n nodo a enlazar
      */
-    public void setNext(Ship n){
+    public void setNext(Node n){
         this.next = n;
     }
     /**
      * Retorna el nodo siguiente
      * @return 
      */
-    public Ship getNext(){
+    public Node getNext(){
         return this.next;
     }
 
@@ -39,14 +39,14 @@ public class Ship {
      * Enlaza un nodo a un nodo anterior
      * @param n 
      */
-    public void setPrevious(Ship n){
+    public void setPrevious(Node n){
         this.previous = n;
     }
     /**
      * retorna el nodo anterior
      * @return 
      */
-    public Ship getPrevious(){
+    public Node getPrevious(){
         return this.previous;
     }
     

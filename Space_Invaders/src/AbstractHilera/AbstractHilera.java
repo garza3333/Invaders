@@ -5,6 +5,7 @@
  */
 package AbstractHilera;
 
+import Objects.Bullet;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 
@@ -20,8 +21,13 @@ public interface AbstractHilera {
 //    public void setCanvas(Canvas c);
 //    public void setGraphics(Graphics2D g);
     
+    
+    
     public void draw(Canvas c , Graphics2D g);
-    public void update();
+    public void update(Bullet b);
+    
+    
+    public void down();
     
     
     

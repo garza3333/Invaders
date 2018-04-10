@@ -14,7 +14,7 @@ public class DoublyLinkedList extends LinkedList{
      * @param n 
      */
     @Override
-    public void add(Ship n){
+    public void add(Node n){
         this.ad(n);
     }
     
@@ -26,11 +26,11 @@ public class DoublyLinkedList extends LinkedList{
     
     
     
-    private void ad(Ship n){
+    private void ad(Node n){
         if(isEmpty()){
             this.head = this.tail = n;
         }else{
-            Ship temp = this.head;
+            Node temp = this.head;
             while(temp.getNext() != null){
                 temp = temp.getNext();
             }

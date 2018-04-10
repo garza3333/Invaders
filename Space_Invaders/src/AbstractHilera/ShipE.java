@@ -7,22 +7,28 @@ package AbstractHilera;
 
 import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
+import Frames.Manager;
+import Objects.Bullet;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import structures.LinkedList;
-import structures.Ship;
+import structures.Node;
 
 /**
  *
- * @author curso
+ * @author Daniel
  */
-public class HileraB implements AbstractHilera{
+public class ShipE implements AbstractHilera{
     private int x,y;
     private LinkedList l;
     private FactoryBasic fb;
     private boolean flag,flagMove;
+    private Manager g;
+    private Image image;
 
 
     @Override
@@ -32,16 +38,17 @@ public class HileraB implements AbstractHilera{
         this.fb = new FactoryBasic();
         this.l = new LinkedList();
         int cont = 0;
-        
+        this.image = Toolkit.getDefaultToolkit().getImage("Images/ShipE.png");
+        g = new Manager();
         
         flag = true;
         flagMove = true;
         int pos = 0;
         while(cont < 10){
             
-            Enemy e = fb.createEnemy(x+pos, 0, 1, false, 3,cont);
+            Enemy e = fb.createEnemy(image,x+pos, 0, 1, false, 3,cont);
             
-            Ship ship = new Ship(e);
+            Node ship = new Node(e);
             l.add(ship);
             
             cont+=1;
@@ -65,13 +72,14 @@ public class HileraB implements AbstractHilera{
     public void setPosY(int y) {
         this.y = y;
     }
+    
     public LinkedList getList(){
         return l;
     }
 
     @Override
     public void draw(Canvas c , Graphics2D g) {
-        Ship temp = this.l.getHead();
+        Node temp = this.l.getHead();
         
         while(temp!=null){
             
@@ -85,34 +93,37 @@ public class HileraB implements AbstractHilera{
     }
 
 
-
-//    @Override
-//    public void setCanvas(Canvas c) {
-//        this.c = c;
-//    }
-//
-//    @Override
-//    public void setGraphics(Graphics2D g) {
-//        this.g = g;
-//    }
-
     @Override
-    public void update() {
+    public void down() {
         
-        
+//         Bullet b = g.getPlayFrame().getCanvas().getMainShip().getBullet();
+         
+         
         if(flagMove && l.getTail().getValue().getX()<=750){
             if(l.getTail().getValue().getX()== 750){
             flagMove = false;
-            Ship temp  = l.getHead();
+            Node temp  = l.getHead();
             y += 20;
             while(temp!= null){
+
                 temp.getValue().setY(y);
+                temp.getValue().update(temp.getValue().getX(), y);
+                
+                
+               
+    
+                
                 temp = temp.getNext();
+                
                 }     
         }
-            Ship temp = l.getHead();
+            Node temp = l.getHead();
             while(temp!=null){
+
                    temp.getValue().setX(temp.getValue().getX()+2);
+                   temp.getValue().update(temp.getValue().getX()+2, temp.getValue().getY());
+              
+                                 
                    temp = temp.getNext();
             }
         }else if(!flagMove && l.getHead().getValue().getX()>=10){
@@ -123,22 +134,45 @@ public class HileraB implements AbstractHilera{
             
             
                     
-            Ship temp  = l.getHead();
+            Node temp  = l.getHead();
             y += 20;
             while(temp!= null){
+
                 temp.getValue().setY(y);
+                temp.getValue().update(temp.getValue().getX(), y);
+         
+                        
                 temp = temp.getNext();
                 }
             }
             
-            Ship temp = l.getHead();
+            Node temp = l.getHead();
             while(temp!=null){
+
                 temp.getValue().setX(temp.getValue().getX()-2);
+                temp.getValue().update(temp.getValue().getX()-2, temp.getValue().getY());
+                
+                
+                
+                 
                 temp = temp.getNext();
             }
         }
+//        this.update(b);
 
         }
+
+    @Override
+    public void update(Bullet b) {
+        Node temp = l.getHead();
+        while(temp!=null){
+            if(b.getR().intersects(temp.getValue().getPosColition())){
+                System.out.println(temp.getValue().getID());
+            }
+        }
+        
+        
+    }
 
     
     
@@ -147,11 +181,11 @@ public class HileraB implements AbstractHilera{
        @Override
        public void run(){
            while(true){
-           update();
+           down();
            try {
                Moviment.sleep(10);
            } catch (InterruptedException ex) {
-               Logger.getLogger(HileraB.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
            }}
        }
    }
@@ -161,3 +195,4 @@ public class HileraB implements AbstractHilera{
      
     
 }
+
