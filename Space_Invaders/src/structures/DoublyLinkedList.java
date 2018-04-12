@@ -38,6 +38,8 @@ public class DoublyLinkedList extends LinkedList{
             n.setPrevious(temp);
             this.tail = n;
         }
+        size++;
     }
+    
     
 }

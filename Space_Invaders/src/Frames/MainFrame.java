@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,8 +35,9 @@ public final class MainFrame extends Manager{
     private final Color bg = new Color(255,172,117);
     private final Color titleC = new Color(0,0,0);
     private Font fontTitle,fontButton;
+    private final Manager manager;
     
-    public MainFrame(){
+    public MainFrame(Manager g){
         
         try 
         {
@@ -49,6 +49,7 @@ public final class MainFrame extends Manager{
         {
             fontTitle = null;
         }
+        this.manager = g;
         v.setTitle("Space Invaders");
         v.setFont(fontTitle);
         
@@ -203,6 +204,7 @@ public final class MainFrame extends Manager{
         public void actionPerformed(ActionEvent e) {
             v.dispose();
             this.show("start");
+            
         }
     
 }

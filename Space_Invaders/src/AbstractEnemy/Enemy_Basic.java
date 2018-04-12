@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AbstractEnemy;
 
 import java.awt.Image;
-import java.awt.Rectangle;
+
 
 /**
  *
@@ -16,7 +12,7 @@ public class Enemy_Basic implements Enemy{
     private  Image image;
     private int posX,posY,speed,life,id;
     private boolean boss;
-    private Rectangle posColition;
+  
     
     public Enemy_Basic(){
         
@@ -30,7 +26,7 @@ public class Enemy_Basic implements Enemy{
         setSpeed(s);
         setBoss(b);
         setImage(image);
-        this.posColition = new Rectangle(x,y,x+32,y+32);
+       
         
     }
     
@@ -110,23 +106,5 @@ public class Enemy_Basic implements Enemy{
     @Override
     public int getID() {
         return this.id;
-    }
-
-    @Override
-    public void setPosColition(Rectangle r) {
-        this.posColition = r;
-    }
-
-    @Override
-    public Rectangle getPosColition() {
-        return this.posColition;
-    }
-
-    @Override
-    public void update(int x, int y) {
-        this.posColition = new Rectangle(x,y,x+32,y+32);
-    }
-    
-
-    
+    }   
 }

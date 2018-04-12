@@ -16,12 +16,12 @@ public class Bullet{
     private int posX;
     private int posY;
     private final Canvas canvas;
-    private Rectangle r;
+    
     
     public Bullet(Canvas canvas){
         this.canvas = canvas;
         this.bullet = Toolkit.getDefaultToolkit().getImage("Images/bullet2.jpg");
-        this.r = new Rectangle(posX,posY,posX+16,posY+16);
+        
     }
     public int getX(){
         return this.posX;
@@ -40,17 +40,13 @@ public class Bullet{
         this.posY += y;
     }
     
-    
-    public Rectangle getR(){
-        return this.r;
-    }
     public void draw(Graphics2D g){
         g.drawImage(this.getImage(),this.posX,this.posY,this.canvas);
     }
     public void update(int x , int y){
         this.posX = x;
         this.posY = y;
-        this.r = new Rectangle(x,y,x+16,y+16);
+        
         
     }
 

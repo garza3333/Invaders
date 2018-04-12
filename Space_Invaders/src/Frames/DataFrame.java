@@ -25,7 +25,8 @@ public final class DataFrame {
     private final Color bg = new Color(255,172,117);
     private static final JFrame v = new JFrame();
     private Font fontPlayers,fontButton;
-    public DataFrame(){
+    private final Manager manager;
+    public DataFrame(Manager g){
         
                 try 
         {
@@ -39,7 +40,7 @@ public final class DataFrame {
         }
 //        v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //        v.setLayout(new GridLayout());
-        
+        this.manager = g;
         v.setResizable(false);
         v.setUndecorated(true);
         v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

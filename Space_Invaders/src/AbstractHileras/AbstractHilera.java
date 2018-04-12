@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package AbstractHilera;
+
+package AbstractHileras;
 
 import Objects.Bullet;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
+import structures.AbstractList;
 
 /**
  *
@@ -18,13 +15,16 @@ public interface AbstractHilera {
     
     public void setPosX(int x);
     public void setPosY(int y);
-//    public void setCanvas(Canvas c);
-//    public void setGraphics(Graphics2D g);
+    public AbstractList getList();
+
     
+    public void destroy(int i);
+    public String getType();
     
+    public void center(int i);
     
     public void draw(Canvas c , Graphics2D g);
-    public void update(Bullet b);
+   
     
     
     public void down();

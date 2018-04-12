@@ -1,16 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Objects;
 
+import AbstractHileras.*;
+
+import Frames.Manager;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import structures.Node;
 
 
 
@@ -27,12 +27,15 @@ public class MainShip implements KeyListener {
     
     private final Canvas component;
     
-    public MainShip(Canvas  canvas){
+    private Manager manager;
+    
+    public MainShip(Canvas  canvas, Manager g){
         ship =  Toolkit.getDefaultToolkit().getImage("Images/spaceship64bits.png");
         this.shipX = 400; //790 limite derecho //400 pos nave
         this.shipY = 500; // limite de naves enemigas //500 en y
         this.component = canvas;
         this.b = new Bullet(component);
+        this.manager = g;
         
         
     }
@@ -60,12 +63,12 @@ public class MainShip implements KeyListener {
     public void update(){
         if(right && !left ){
             if(getX() != 750){
-                shipX += 1;
+                shipX += 2;
             }else{
                     shipX = 750;}
         }else if(left && !right ){
             if(getX() != 10){
-                shipX -= 1;
+                shipX -= 2;
             }else{
                 shipX = 10;}
         }
@@ -125,6 +128,7 @@ public class MainShip implements KeyListener {
     
     
          class Shoot extends Thread{
+             
 
              @Override
              public void run(){
@@ -138,8 +142,54 @@ public class MainShip implements KeyListener {
                
                     
 
-                
                 while(b.getY() != 0){
+                    int cont = 0;
+                    
+                    AbstractHilera hilera = manager.getPlayFrame().getCanvas().getCurrentHilera();
+                    Node temp = manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getHead();
+                    
+                    
+                    if(hilera.getClass() == Basic.class || hilera.getClass() == ShipA.class || hilera.getClass() == ShipB.class){
+                        while(temp!=null){
+                            if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
+                              && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
+                                System.out.println("colision b B A");
+                                hilera.destroy(cont);
+                                shoot = false;
+                                flagS = false;
+                                break;
+                                
+                                
+                            }
+                            temp = temp.getNext();
+                            cont++;
+                        }
+                        
+                        
+                    }else if(hilera.getClass() == ShipC.class || hilera.getClass() == ShipD.class || hilera.getClass() == ShipE.class){
+                        
+                        int ind = 0;
+                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()){
+                            if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
+                              && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
+                                System.out.println("colision C D E");
+                                hilera.destroy(cont);
+                                shoot = false;
+                                flagS = false;
+                                break;
+                                
+                                
+                                
+                                
+                            }
+                            temp = temp.getNext();
+                            cont++;
+                            ind++;
+                        }                        
+                    }
+                   
+                    
+                    
                     b.setY(-1);
                     
                     try {

@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package AbstractHilera;
+
+package AbstractHileras;
 
 import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
-import Frames.Manager;
-import Objects.Bullet;
+
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,8 +22,8 @@ public class Basic implements AbstractHilera{
     private LinkedList l;
     private FactoryBasic fb;
     private boolean flag,flagMove;
-    private Manager g;
     private Image image;
+    private String type;
 
 
     @Override
@@ -39,12 +34,12 @@ public class Basic implements AbstractHilera{
         this.l = new LinkedList();
         int cont = 0;
         this.image = Toolkit.getDefaultToolkit().getImage("Images/basic.png");
-        g = new Manager();
+        this.type = "Basic";
         
         flag = true;
         flagMove = true;
         int pos = 0;
-        while(cont < 10){
+        while(cont < 11){
             
             Enemy e = fb.createEnemy(image ,x+pos, 0, 1, false, 3,cont);
             
@@ -73,6 +68,7 @@ public class Basic implements AbstractHilera{
         this.y = y;
     }
     
+    @Override
     public LinkedList getList(){
         return l;
     }
@@ -92,13 +88,9 @@ public class Basic implements AbstractHilera{
         
     }
 
-
     @Override
     public void down() {
-        
-//         Bullet b = g.getPlayFrame().getCanvas().getMainShip().getBullet();
-         
-         
+
         if(flagMove && l.getTail().getValue().getX()<=750){
             if(l.getTail().getValue().getX()== 750){
             flagMove = false;
@@ -107,11 +99,6 @@ public class Basic implements AbstractHilera{
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
-                
-                
-               
-    
                 
                 temp = temp.getNext();
                 
@@ -121,9 +108,7 @@ public class Basic implements AbstractHilera{
             while(temp!=null){
 
                    temp.getValue().setX(temp.getValue().getX()+2);
-                   temp.getValue().update(temp.getValue().getX()+2, temp.getValue().getY());
-              
-                                 
+          
                    temp = temp.getNext();
             }
         }else if(!flagMove && l.getHead().getValue().getX()>=10){
@@ -131,17 +116,13 @@ public class Basic implements AbstractHilera{
             if(l.getHead().getValue().getX()== 10){
             flagMove = true;
             
-            
-            
-                    
+  
             Node temp  = l.getHead();
             y += 20;
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
-         
-                        
+      
                 temp = temp.getNext();
                 }
             }
@@ -150,33 +131,30 @@ public class Basic implements AbstractHilera{
             while(temp!=null){
 
                 temp.getValue().setX(temp.getValue().getX()-2);
-                temp.getValue().update(temp.getValue().getX()-2, temp.getValue().getY());
-                
-                
-                
-                 
+     
                 temp = temp.getNext();
             }
         }
-//        this.update(b);
+
 
         }
 
     @Override
-    public void update(Bullet b) {
-        Node temp = l.getHead();
-        while(temp!=null){
-            if(b.getR().intersects(temp.getValue().getPosColition())){
-                System.out.println(temp.getValue().getID());
-            }
-        }
+    public void destroy(int i) {
         
-        
+        this.l.delete(i);
     }
 
-    
-    
-    
+    @Override
+    public void center(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getType() {
+            return this.type;
+        }
+
    public class Moviment extends Thread{
        @Override
        public void run(){

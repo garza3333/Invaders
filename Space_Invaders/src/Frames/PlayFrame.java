@@ -4,7 +4,7 @@ package Frames;
 
 
 
-import AbstractHilera.*;
+import AbstractHileras.AbstractHilera;
 import FactoryHilera.FactoryHilera;
 import Objects.*;
 import java.awt.BorderLayout;
@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -41,11 +43,21 @@ public class PlayFrame{
     private final JFrame v = new JFrame();
     private Color bg;
     private Font fontTitle;
-    public  myCanvas canvas;
+    public  final myCanvas canvas;
+    private final Manager manager;
+    
+    private final JLabel current;
+    private final JLabel currentImage;
+    
+    private final JLabel next;
+    private final JLabel nextImage;
+    
+    private final JLabel level;
+    private final JLabel score;
     
     
     
-    public PlayFrame(){
+    public PlayFrame(Manager g){
         this.bg = new Color(0,0,0);
  try {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
@@ -57,6 +69,7 @@ public class PlayFrame{
             fontTitle = null;
         }
         
+        this.manager = g;
         v.setTitle("Space Invaders");
 
         v.setResizable(false);
@@ -69,7 +82,7 @@ public class PlayFrame{
         
         
         
-        canvas = new myCanvas();
+        
 
         
         JPanel controlPanel = new JPanel(); 
@@ -85,7 +98,7 @@ public class PlayFrame{
         lblscore.setForeground(Color.WHITE);
         lblscore.setBounds(70,10,200,70);
         
-        JLabel score = new JLabel("0");
+        score = new JLabel("0");
         score.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
         score.setForeground(Color.WHITE);
         score.setBounds(70,60,200,70);
@@ -97,10 +110,15 @@ public class PlayFrame{
         lblcurrent.setBounds(70,120,200,70);
         
         
-        JLabel current = new JLabel("0");
+        current = new JLabel("0");
         current.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
         current.setForeground(Color.WHITE);
         current.setBounds(70,120,200,70);
+        
+        currentImage = new JLabel();
+        currentImage.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
+        currentImage.setForeground(Color.WHITE);
+        currentImage.setBounds(70,120,200,70);
         
         
         JLabel lblNext = new JLabel("Next");
@@ -109,10 +127,15 @@ public class PlayFrame{
         lblNext.setBounds(70,120,200,70);
         
         
-        JLabel next = new JLabel("0");
+        next = new JLabel("0");
         next.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
         next.setForeground(Color.WHITE);
         next.setBounds(70,120,200,70);
+        
+        nextImage = new JLabel();
+        nextImage.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
+        nextImage.setForeground(Color.WHITE);
+        nextImage.setBounds(70,120,200,70);        
         
         
         JLabel lblLevel = new JLabel("Level");
@@ -121,7 +144,7 @@ public class PlayFrame{
         lblLevel.setBounds(70,120,200,70);
         
         
-        JLabel level = new JLabel("0");
+        level = new JLabel("0");
         level.setFont(this.fontTitle.deriveFont(Font.PLAIN,20));
         level.setForeground(Color.WHITE);
         level.setBounds(70,120,200,70);
@@ -133,9 +156,11 @@ public class PlayFrame{
         controlPanel.add(Box.createRigidArea(new Dimension(50,50)));
         controlPanel.add(lblcurrent);  
         controlPanel.add(current);
+        controlPanel.add(currentImage);
         controlPanel.add(Box.createRigidArea(new Dimension(50,50)));
         controlPanel.add(lblNext);
         controlPanel.add(next);
+        controlPanel.add(nextImage);
         controlPanel.add(Box.createRigidArea(new Dimension(50,50)));
         controlPanel.add(lblLevel);
         controlPanel.add(level);
@@ -144,7 +169,9 @@ public class PlayFrame{
 
         fondo.setPreferredSize(new Dimension(800,1200));
         fondo.setBackground(this.bg);
- 
+        
+        
+        canvas = new myCanvas();
         fondo.add(canvas);
         
         
@@ -168,9 +195,9 @@ public class PlayFrame{
     
     public class myCanvas extends Canvas implements Runnable{
      
-        private FactoryHilera factory;
-        AbstractHilera hilera;
-        private  MainShip mainShip;
+        private final FactoryHilera factory;
+        AbstractHilera currentHilera,nextHilera;
+        private final  MainShip mainShip;
         private boolean running;
         private Thread thread;
         
@@ -178,12 +205,21 @@ public class PlayFrame{
         
         public myCanvas(){
             
-        
-            setPreferredSize(new Dimension(800,1200));
+            
+            this.setPreferredSize(new Dimension(800,1200));
             this.running = false;
 
-            mainShip = new MainShip(this);
+            mainShip = new MainShip(this,manager);
+            
+            
             factory = new FactoryHilera();
+            currentHilera = factory.makeRow(1);
+            nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7));
+            
+            current.setText(currentHilera.getType());
+            currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
+            next.setText(nextHilera.getType());
+            nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
             
 
            
@@ -195,6 +231,9 @@ public class PlayFrame{
         }
         public MainShip getMainShip(){
             return this.mainShip;
+        }
+        public AbstractHilera getCurrentHilera(){
+            return this.currentHilera;
         }
 
         
@@ -223,7 +262,7 @@ public class PlayFrame{
             
             this.createBufferStrategy(3);
             BufferStrategy bs = this.getBufferStrategy();
-            hilera = factory.makeRow("ShipC");
+            
             
             while(running){
                 
@@ -243,7 +282,18 @@ public class PlayFrame{
                     
                     mainShip.draw(g);
                     mainShip.update();
-                    hilera.draw(this, g);
+                    
+                    if(currentHilera.getList().isEmpty()){
+           
+                        currentHilera = nextHilera;
+                        nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7));
+                        current.setText(currentHilera.getType());
+                        currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
+                        next.setText(nextHilera.getType());
+                        nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
+                        
+                    }else{
+                    currentHilera.draw(this, g);}
                     
                     
                     

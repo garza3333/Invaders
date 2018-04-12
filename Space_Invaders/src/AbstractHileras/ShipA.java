@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package AbstractHilera;
+
+package AbstractHileras;
+
 
 import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
-import Frames.Manager;
-import Objects.Bullet;
+
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -22,14 +18,14 @@ import structures.Node;
  *
  * @author Daniel
  */
-public class ShipD implements AbstractHilera{
+public class ShipA implements AbstractHilera{
     private int x,y;
     private LinkedList l;
     private FactoryBasic fb;
     private boolean flag,flagMove;
-    private Manager g;
-    private Image image;
-
+    
+    private Image image,imageBoss;
+    private String type;
     @Override
     public void init() {
         setPosX(250);
@@ -37,13 +33,22 @@ public class ShipD implements AbstractHilera{
         this.fb = new FactoryBasic();
         this.l = new LinkedList();
         int cont = 0;
-        this.image = Toolkit.getDefaultToolkit().getImage("Images/ShipD.png");
-        g = new Manager();
+        this.image = Toolkit.getDefaultToolkit().getImage("Images/shipA.png");
+        this.imageBoss = Toolkit.getDefaultToolkit().getImage("Images/boss.png");
+        this.type = "Type A";
         
         flag = true;
         flagMove = true;
         int pos = 0;
-        while(cont < 10){
+        while(cont < 11){
+            if(cont == 5){
+                Enemy e = fb.createEnemy(imageBoss, x+pos, 0, 5, true, 3, cont);
+                Node ship = new Node(e);
+                l.add(ship);
+                cont+=1;
+                pos+=40;
+                        
+            }
             
             Enemy e = fb.createEnemy(image,x+pos, 0, 1, false, 3,cont);
             
@@ -72,6 +77,7 @@ public class ShipD implements AbstractHilera{
         this.y = y;
     }
     
+    @Override
     public LinkedList getList(){
         return l;
     }
@@ -95,7 +101,6 @@ public class ShipD implements AbstractHilera{
     @Override
     public void down() {
         
-//         Bullet b = g.getPlayFrame().getCanvas().getMainShip().getBullet();
          
          
         if(flagMove && l.getTail().getValue().getX()<=750){
@@ -106,7 +111,7 @@ public class ShipD implements AbstractHilera{
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
+                
                 
                 
                
@@ -120,7 +125,7 @@ public class ShipD implements AbstractHilera{
             while(temp!=null){
 
                    temp.getValue().setX(temp.getValue().getX()+2);
-                   temp.getValue().update(temp.getValue().getX()+2, temp.getValue().getY());
+                   
               
                                  
                    temp = temp.getNext();
@@ -138,7 +143,7 @@ public class ShipD implements AbstractHilera{
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
+                
          
                         
                 temp = temp.getNext();
@@ -149,7 +154,7 @@ public class ShipD implements AbstractHilera{
             while(temp!=null){
 
                 temp.getValue().setX(temp.getValue().getX()-2);
-                temp.getValue().update(temp.getValue().getX()-2, temp.getValue().getY());
+                
                 
                 
                 
@@ -157,25 +162,25 @@ public class ShipD implements AbstractHilera{
                 temp = temp.getNext();
             }
         }
-//        this.update(b);
+
 
         }
 
     @Override
-    public void update(Bullet b) {
-        Node temp = l.getHead();
-        while(temp!=null){
-            if(b.getR().intersects(temp.getValue().getPosColition())){
-                System.out.println(temp.getValue().getID());
-            }
-        }
-        
-        
+    public void destroy(int i) {
+        this.l.delete(i);    
     }
 
-    
-    
-    
+    @Override
+    public void center(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
+    }
+
    public class Moviment extends Thread{
        @Override
        public void run(){

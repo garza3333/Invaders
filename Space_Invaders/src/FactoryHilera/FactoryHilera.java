@@ -1,12 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FactoryHilera;
 
-import AbstractHilera.AbstractHilera;
-import AbstractHilera.*;
+import AbstractHileras.ShipA;
+import AbstractHileras.Basic;
+import AbstractHileras.ShipC;
+import AbstractHileras.ShipB;
+import AbstractHileras.ShipD;
+import AbstractHileras.ShipE;
+import AbstractHileras.AbstractHilera;
 
 /**
  *
@@ -21,38 +22,38 @@ public class FactoryHilera implements AbstractFactoryHilera{
     }
 
     @Override
-    public AbstractHilera makeRow(String h) {
+    public AbstractHilera makeRow(int h) {
         switch(h){
-            case "Basic":
+            case 1:
                 Basic basic = new Basic();
                 basic.init();
                 return basic;                
                 
             
-            case "ShipA":
+            case 2:
                 ShipA a = new ShipA();
                 a.init();
                 return a;                
               
          
-            case "ShipB":
+            case 3:
                 ShipB b = new ShipB();
                 b.init();
                 return b;                
            
-            case "ShipC":
+            case 4:
                 ShipC c = new ShipC();
                 c.init();
                 return c;
                 
            
-            case "ShipD":
+            case 5:
                 ShipD d = new ShipD();
                 d.init();
                 return d;                
                 
            
-            case "ShipE":
+            case 6:
                 ShipE e = new ShipE();
                 e.init();
                 return e;                

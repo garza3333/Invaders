@@ -20,20 +20,20 @@ public class Manager {
     public void show(String n){
         switch(n){
             case "main":
-                main = new MainFrame();         
+                main = new MainFrame(this);         
                 break;
                 
                 
             case "data":  
-                data = new DataFrame();
+                data = new DataFrame(this);
                 break;
             
             case "start":
-                user = new UsserFrame();
+                user = new UsserFrame(this);
                 break;
             
             case "play":
-                play = new PlayFrame();
+                play = new PlayFrame(this);
                 break;
                 
                 

@@ -30,9 +30,10 @@ public class UsserFrame{
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg");
-    private Font fontTitle,fontButton;   
+    private Font fontTitle,fontButton;  
+    private Manager manager;
     
-    public UsserFrame(){
+    public UsserFrame(Manager g){
         try {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
         fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
@@ -44,7 +45,7 @@ public class UsserFrame{
         }
         
         
-        
+        this.manager = g;
         v.setTitle("Usser");
         v.setFont(fontTitle);
         

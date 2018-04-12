@@ -26,12 +26,15 @@ public class DoublyCircularList extends LinkedList{
     private void ad(Node n){
         if(isEmpty()){
             this.head = this.tail = n;
-        }else{
+        }else{ 
             this.tail.setNext(n);
             n.setPrevious(this.tail);
             this.tail = n;
             tail.setNext(this.head);
+            this.head.setPrevious(this.tail);
         }
+        
+        size++;
     }
         
 }

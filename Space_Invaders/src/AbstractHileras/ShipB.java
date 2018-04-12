@@ -1,52 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package AbstractHilera;
+
+package AbstractHileras;
 
 import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
-import Frames.Manager;
-import Objects.Bullet;
+
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import structures.LinkedList;
+import structures.DoublyLinkedList;
+
 import structures.Node;
 
 /**
  *
  * @author Daniel
  */
-public class ShipE implements AbstractHilera{
+public class ShipB implements AbstractHilera{
     private int x,y;
-    private LinkedList l;
+    private DoublyLinkedList l;
     private FactoryBasic fb;
     private boolean flag,flagMove;
-    private Manager g;
-    private Image image;
-
+    
+    private Image image,imageBoss;
+    private String type;
 
     @Override
     public void init() {
         setPosX(250);
         setPosY(0);
         this.fb = new FactoryBasic();
-        this.l = new LinkedList();
+        this.l = new DoublyLinkedList();
         int cont = 0;
-        this.image = Toolkit.getDefaultToolkit().getImage("Images/ShipE.png");
-        g = new Manager();
+        this.image = Toolkit.getDefaultToolkit().getImage("Images/shipB.png");
+        this.imageBoss = Toolkit.getDefaultToolkit().getImage("Images/boss.png");
         
+        this.type = "Type B";
         flag = true;
         flagMove = true;
         int pos = 0;
-        while(cont < 10){
+        while(cont < 11){
             
-            Enemy e = fb.createEnemy(image,x+pos, 0, 1, false, 3,cont);
+            Enemy e = fb.createEnemy(image ,x+pos, 0, 1, false, 3,cont);
             
             Node ship = new Node(e);
             l.add(ship);
@@ -57,7 +55,9 @@ public class ShipE implements AbstractHilera{
         if(flag){
             flag = false;
             Moviment m = new Moviment();
+            ChangeBoss cb = new ChangeBoss();
             m.start();
+            cb.start();
         }
         
         
@@ -73,20 +73,24 @@ public class ShipE implements AbstractHilera{
         this.y = y;
     }
     
-    public LinkedList getList(){
+    @Override
+    public DoublyLinkedList getList(){
         return l;
     }
 
     @Override
     public void draw(Canvas c , Graphics2D g) {
         Node temp = this.l.getHead();
-        
+
         while(temp!=null){
-            
+            if(temp.getValue().isBoss()){
+                g.drawImage(imageBoss,temp.getValue().getX(),temp.getValue().getY(),c);
+                
+            }else{
             g.drawImage(temp.getValue().getImage(),temp.getValue().getX(),temp.getValue().getY(),c);
             
+            }
             temp = temp.getNext();
-            
               
         }
         
@@ -96,7 +100,7 @@ public class ShipE implements AbstractHilera{
     @Override
     public void down() {
         
-//         Bullet b = g.getPlayFrame().getCanvas().getMainShip().getBullet();
+
          
          
         if(flagMove && l.getTail().getValue().getX()<=750){
@@ -107,7 +111,7 @@ public class ShipE implements AbstractHilera{
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
+                
                 
                 
                
@@ -119,9 +123,10 @@ public class ShipE implements AbstractHilera{
         }
             Node temp = l.getHead();
             while(temp!=null){
+                
 
-                   temp.getValue().setX(temp.getValue().getX()+2);
-                   temp.getValue().update(temp.getValue().getX()+2, temp.getValue().getY());
+                temp.getValue().setX(temp.getValue().getX()+2);
+                
               
                                  
                    temp = temp.getNext();
@@ -139,7 +144,7 @@ public class ShipE implements AbstractHilera{
             while(temp!= null){
 
                 temp.getValue().setY(y);
-                temp.getValue().update(temp.getValue().getX(), y);
+               
          
                         
                 temp = temp.getNext();
@@ -150,7 +155,7 @@ public class ShipE implements AbstractHilera{
             while(temp!=null){
 
                 temp.getValue().setX(temp.getValue().getX()-2);
-                temp.getValue().update(temp.getValue().getX()-2, temp.getValue().getY());
+               
                 
                 
                 
@@ -158,25 +163,24 @@ public class ShipE implements AbstractHilera{
                 temp = temp.getNext();
             }
         }
-//        this.update(b);
+
 
         }
 
     @Override
-    public void update(Bullet b) {
-        Node temp = l.getHead();
-        while(temp!=null){
-            if(b.getR().intersects(temp.getValue().getPosColition())){
-                System.out.println(temp.getValue().getID());
-            }
-        }
-        
-        
+    public void destroy(int i) {
+            this.l.delete(i);
     }
 
-    
-    
-    
+    @Override
+    public void center(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
+    }
    public class Moviment extends Thread{
        @Override
        public void run(){
@@ -189,9 +193,52 @@ public class ShipE implements AbstractHilera{
            }}
        }
    }
-
+   
+   public class ChangeBoss extends Thread{
+        private int randomNum,previous;
     
-     
+    @Override
+    public void run(){
+        randomNum = ThreadLocalRandom.current().nextInt(0,11);
+        previous = randomNum;
+        while(true){
+        Node temp = l.getHead();
+       
+        while(temp!=null){
+             
+            randomNum = verifica(ThreadLocalRandom.current().nextInt(0,11));
+        
+            
+            if(temp.getValue().getID() != randomNum){
+                temp.getValue().setBoss(false);   
+                temp.getValue().setLife(1);
+                temp = temp.getNext();
+            }else{
+            temp.getValue().setBoss(true);
+            temp.getValue().setLife(5);
+            temp = temp.getNext();
+            }
+            
+        }
+            try {
+                ChangeBoss.sleep(350);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ShipB.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+        
+        
+        }     
+    }
+    public int verifica(int n){
+        if(n == previous){
+           
+            return verifica(ThreadLocalRandom.current().nextInt(0,11));
+        }else{
+            return n;
+        }
+    }
+
+   }
      
     
 }
