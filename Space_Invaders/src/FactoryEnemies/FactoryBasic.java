@@ -12,9 +12,9 @@ import java.awt.Image;
 public class FactoryBasic implements AbstractShip{
 
     @Override
-    public Enemy createEnemy(Image i, int x, int y, int l, boolean b, int s,int id){
+    public Enemy createEnemy(Image i, int x, int y, int l, boolean b){
         Enemy_Basic e = new Enemy_Basic();
-        e.init(i, x, y, l, b, s,id);
+        e.init(i, x, y, l, b);
         return e;
     }
     

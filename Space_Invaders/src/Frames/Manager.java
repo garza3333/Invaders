@@ -15,6 +15,12 @@ public class Manager {
             
     }
     
+    public void show(String n , String p){
+        if("play".equals(n)){
+            
+        play = new PlayFrame(this,p);
+        }
+    }
     
     
     public void show(String n){

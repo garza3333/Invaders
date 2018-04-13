@@ -5,6 +5,8 @@
  */
 package structures;
 
+import AbstractEnemy.Enemy;
+
 /**
  *
  * @author Daniel
@@ -19,8 +21,10 @@ public interface AbstractList {
     public boolean isEmpty();
     public void add(Node n);
     public void delete(int n);
+    public void deleteAll();
     public Node getHead();
     public Node getTail();
+    public Enemy findI(int i);
     
     
     

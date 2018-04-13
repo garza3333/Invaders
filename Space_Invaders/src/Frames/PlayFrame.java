@@ -45,6 +45,10 @@ public class PlayFrame{
     private Font fontTitle;
     public  final myCanvas canvas;
     private final Manager manager;
+    private int scorePlayer;    
+    private String namePlayer;
+    
+    
     
     private final JLabel current;
     private final JLabel currentImage;
@@ -55,9 +59,12 @@ public class PlayFrame{
     private final JLabel level;
     private final JLabel score;
     
-    
-    
     public PlayFrame(Manager g){
+            this(g,"");
+        
+    }
+    
+    public PlayFrame(Manager g,String nameP){
         this.bg = new Color(0,0,0);
  try {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
@@ -70,6 +77,8 @@ public class PlayFrame{
         }
         
         this.manager = g;
+        this.namePlayer = nameP;
+        scorePlayer = 0;
         v.setTitle("Space Invaders");
 
         v.setResizable(false);
@@ -186,9 +195,20 @@ public class PlayFrame{
         
         v.setVisible(true);
         canvas.start();
+        System.out.println(this.namePlayer);
         
         
     }
+    public int getScorePlayer(){
+        return this.scorePlayer;
+    }
+    public JLabel getScoreLabel(){
+        return this.score;
+    }
+    public void plusScorePlayer(int num){
+        scorePlayer+= num;
+    }
+
     public myCanvas getCanvas(){
         return this.canvas;
     }
@@ -212,9 +232,10 @@ public class PlayFrame{
             mainShip = new MainShip(this,manager);
             
             
-            factory = new FactoryHilera();
-            currentHilera = factory.makeRow(1);
-            nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7));
+            factory = new FactoryHilera(manager);
+            
+            currentHilera = factory.makeRow(4,0);
+            nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7),0);
             
             current.setText(currentHilera.getType());
             currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
@@ -280,20 +301,17 @@ public class PlayFrame{
                     g.setColor(Color.BLACK);
                     g.fillRect(0,0,800,1200);
                     
+ 
+                    
+                    score.setText(String.valueOf(scorePlayer));
+                    level.setText(String.valueOf(scorePlayer/250));
+                    
+                    
+                    updateHilera(currentHilera);
+                    
+                    currentHilera.draw(this, g);
                     mainShip.draw(g);
                     mainShip.update();
-                    
-                    if(currentHilera.getList().isEmpty()){
-           
-                        currentHilera = nextHilera;
-                        nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7));
-                        current.setText(currentHilera.getType());
-                        currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
-                        next.setText(nextHilera.getType());
-                        nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
-                        
-                    }else{
-                    currentHilera.draw(this, g);}
                     
                     
                     
@@ -307,11 +325,20 @@ public class PlayFrame{
         public void update(double delta){
             
         }
-                
-            
+        public void updateHilera(AbstractHilera h){
+                    if(h.getList().isEmpty()){
            
-           
+                        currentHilera = nextHilera;
+                        nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7),scorePlayer/250);
+                        current.setText(currentHilera.getType());
+                        currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
+                        next.setText(nextHilera.getType());
+                        nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
+                        
+                    }            
             
+        }
+                    
             
         }
         

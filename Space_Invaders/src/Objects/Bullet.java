@@ -4,7 +4,6 @@ package Objects;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 /**

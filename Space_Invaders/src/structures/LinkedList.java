@@ -54,6 +54,13 @@ public class LinkedList implements AbstractList{
     public Node getTail(){
         return this.tail;
     }
+    @Override
+    public void deleteAll(){
+        this.head = this.tail = null;
+        this.size = 0;
+        
+        
+    }
     
     
     
@@ -73,6 +80,7 @@ public class LinkedList implements AbstractList{
     public int getSize(){
         return this.size;
     }
+   
     
     
     
@@ -116,6 +124,30 @@ public class LinkedList implements AbstractList{
             cont++;
         }
         size--;
+    }
+ 
+
+    @Override
+    public Enemy findI(int i) {
+        return this.fiIn(i);
+    }
+    
+    private Enemy fiIn(int i){
+        Node temp = this.getHead();
+        int cont = 0;
+        
+ 
+        while(cont<=i){
+            if(cont==i){
+                return temp.getValue();
+            }else{
+            temp = temp.getNext();
+            cont++;
+            }
+        }
+        
+        return null;        
+        
     }
 
 

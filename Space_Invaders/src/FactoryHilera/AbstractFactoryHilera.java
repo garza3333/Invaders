@@ -12,7 +12,7 @@ public interface AbstractFactoryHilera {
     
     public void init();
     
-    public AbstractHilera makeRow(int h);
+    public AbstractHilera makeRow(int h,int s);
     
 
     

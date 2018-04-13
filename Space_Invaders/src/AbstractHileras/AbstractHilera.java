@@ -1,7 +1,6 @@
 
 package AbstractHileras;
 
-import Objects.Bullet;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import structures.AbstractList;
@@ -11,7 +10,7 @@ import structures.AbstractList;
  * @author curso
  */
 public interface AbstractHilera {
-    public void init();
+    public void init(int s);
     
     public void setPosX(int x);
     public void setPosY(int y);
@@ -19,7 +18,11 @@ public interface AbstractHilera {
 
     
     public void destroy(int i);
+    
+    public void destroyAll();
     public String getType();
+    
+    public void changeBoss();
     
     public void center(int i);
     

@@ -19,11 +19,10 @@ public class Enemy_Basic implements Enemy{
     }
 
     @Override
-    public void init( Image image ,int x, int y, int l, boolean b, int s, int id) {
+    public void init( Image image ,int x, int y, int l, boolean b) {
         setX(x);
         setY(y);
         setLife(l);
-        setSpeed(s);
         setBoss(b);
         setImage(image);
        
@@ -54,10 +53,6 @@ public class Enemy_Basic implements Enemy{
         this.boss = b;
     }
 
-    @Override
-    public void setSpeed(int s) {
-        this.speed = s;
-    }
 
     @Override
     public void setImage(Image i) {
@@ -88,23 +83,11 @@ public class Enemy_Basic implements Enemy{
         return this.boss == true;
     }
 
-    @Override
-    public int getSpeed() {
-        return this.speed;
-    }
 
     @Override
     public Image getImage() {
         return this.image;
     }
 
-    @Override
-    public void setID(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public int getID() {
-        return this.id;
-    }   
+ 
 }

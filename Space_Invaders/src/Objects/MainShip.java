@@ -10,6 +10,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import structures.Node;
 
 
@@ -132,9 +135,12 @@ public class MainShip implements KeyListener {
 
              @Override
              public void run(){
+                 try {
+                     Shoot.sleep(2);
+                 } catch (InterruptedException ex) {
+                     Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
+                 }
                  
-                
-                
                 b.update(shipX+8,shipY);
                 
                 shoot = true;
@@ -150,14 +156,40 @@ public class MainShip implements KeyListener {
                     
                     
                     if(hilera.getClass() == Basic.class || hilera.getClass() == ShipA.class || hilera.getClass() == ShipB.class){
+                        
+                        
+                        
                         while(temp!=null){
                             if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
                               && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
                                 System.out.println("colision b B A");
-                                hilera.destroy(cont);
+                                
+                                
+                                if(temp.getValue().isBoss()){
+                                    manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
+                                        
+                                    shoot = false;
+                                    flagS = false;
+                                    hilera.destroyAll();
+                                    try {
+                                        Shoot.sleep(5);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+
+                                    manager.getPlayFrame().getCanvas().updateHilera(hilera);
+                                        
+                                    break;
+                                    }else{
+                                
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
                                 shoot = false;
                                 flagS = false;
-                                break;
+                                hilera.destroy(cont);
+
+                                
+
+                                break;}
                                 
                                 
                             }
@@ -166,7 +198,7 @@ public class MainShip implements KeyListener {
                         }
                         
                         
-                    }else if(hilera.getClass() == ShipC.class || hilera.getClass() == ShipD.class || hilera.getClass() == ShipE.class){
+                    }else if(hilera.getClass() == ShipD.class || hilera.getClass() == ShipE.class){
                         
                         int ind = 0;
                         while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()){
@@ -176,6 +208,10 @@ public class MainShip implements KeyListener {
                                 hilera.destroy(cont);
                                 shoot = false;
                                 flagS = false;
+              
+        
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().getHead().getValue().getLife()*10);
+                                
                                 break;
                                 
                                 
@@ -186,6 +222,59 @@ public class MainShip implements KeyListener {
                             cont++;
                             ind++;
                         }                        
+                    }else if(hilera.getClass() == ShipC.class){
+                        
+                        
+                        int ind = 0;
+                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()){
+                            if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
+                              && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
+                                System.out.println("colision C D E");
+                                
+                                
+                                
+                                if(temp.getValue().isBoss()){
+                                    manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
+                                    hilera.destroy(cont);
+                                    shoot = false;
+                                    flagS = false;
+                                    hilera.changeBoss();
+                                   
+                                    
+                                    try {
+                                        Shoot.sleep(5);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    manager.getPlayFrame().getCanvas().updateHilera(hilera);
+
+                                    
+                                        
+                                    break;
+                                    }else{                                
+                                
+                                
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().getHead().getValue().getLife()*10);
+                                hilera.destroy(cont);
+                                shoot = false;
+                                flagS = false;
+              
+        
+                                
+                                
+                                break;}
+                                
+                                
+                                
+                                
+                            }
+                            temp = temp.getNext();
+                            cont++;
+                            ind++;
+                        }                        
+                        
+                        
+         
                     }
                    
                     

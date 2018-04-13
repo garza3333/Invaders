@@ -23,11 +23,15 @@ public class ShipA implements AbstractHilera{
     private LinkedList l;
     private FactoryBasic fb;
     private boolean flag,flagMove;
-    
+    private int speed;
     private Image image,imageBoss;
     private String type;
+    
+    
+    
     @Override
-    public void init() {
+    public void init(int s) {
+        this.speed = s;
         setPosX(250);
         setPosY(0);
         this.fb = new FactoryBasic();
@@ -41,8 +45,9 @@ public class ShipA implements AbstractHilera{
         flagMove = true;
         int pos = 0;
         while(cont < 11){
+            
             if(cont == 5){
-                Enemy e = fb.createEnemy(imageBoss, x+pos, 0, 5, true, 3, cont);
+                Enemy e = fb.createEnemy(imageBoss, x+pos, 0, 5, true);
                 Node ship = new Node(e);
                 l.add(ship);
                 cont+=1;
@@ -50,7 +55,7 @@ public class ShipA implements AbstractHilera{
                         
             }
             
-            Enemy e = fb.createEnemy(image,x+pos, 0, 1, false, 3,cont);
+            Enemy e = fb.createEnemy(image,x+pos, 0, 1, false);
             
             Node ship = new Node(e);
             l.add(ship);
@@ -170,10 +175,17 @@ public class ShipA implements AbstractHilera{
     public void destroy(int i) {
         this.l.delete(i);    
     }
+    @Override
+    public void destroyAll(){
+        this.l.deleteAll();
+        
+        
+    }
+    
+ 
 
     @Override
     public void center(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -181,16 +193,42 @@ public class ShipA implements AbstractHilera{
         return this.type;
     }
 
+    @Override
+    public void changeBoss() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
    public class Moviment extends Thread{
        @Override
        public void run(){
            while(true){
            down();
+           if(speed == 0){
            try {
                Moviment.sleep(10);
            } catch (InterruptedException ex) {
                Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
-           }}
+            }
+           }else if(speed == 1){
+               try {
+                   Moviment.sleep(6);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }else if(speed >= 2){
+               try {
+                   Moviment.sleep(4);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }else if(speed >= 6){
+               try {
+                   Moviment.sleep(2);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
+           }
        }
    }
 

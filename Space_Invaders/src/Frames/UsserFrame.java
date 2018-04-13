@@ -32,6 +32,7 @@ public class UsserFrame{
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg");
     private Font fontTitle,fontButton;  
     private Manager manager;
+    private JTextField usserName;
     
     public UsserFrame(Manager g){
         try {
@@ -116,7 +117,7 @@ public class UsserFrame{
         background.add(lblName);
         
         
-        JTextField usserName = new JTextField(12);
+        usserName = new JTextField(12);
         usserName.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, BLACK));
         usserName.setBounds(400,400,150,30);
         
@@ -133,7 +134,7 @@ public class UsserFrame{
     }
     
     
-        static class Menu extends Manager implements ActionListener{
+         class Menu extends Manager implements ActionListener{
   
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -145,11 +146,12 @@ public class UsserFrame{
            
        }
         
-       static class Play extends Manager implements ActionListener{
+        class Play extends Manager implements ActionListener{
            @Override
            public void actionPerformed(ActionEvent e){
                v.dispose();
-               this.show("play");
+               manager.show("play",usserName.getText());
+               
            }
        }
 

@@ -10,6 +10,6 @@ import java.awt.Image;
  */
 public interface AbstractShip {
     
-    public Enemy createEnemy(Image i, int x, int y, int l, boolean b, int s,int id);
+    public Enemy createEnemy(Image i, int x, int y, int l, boolean b);
     
 }
