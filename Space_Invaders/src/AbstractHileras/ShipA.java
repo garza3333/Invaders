@@ -197,7 +197,10 @@ public class ShipA implements AbstractHilera{
     public void changeBoss() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    //Actualiza los valores de las posiciones de cada objeto del atributo lista
+    
+    
    public class Moviment extends Thread{
        @Override
        public void run(){

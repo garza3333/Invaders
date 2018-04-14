@@ -31,7 +31,12 @@ public class MainShip implements KeyListener {
     private final Canvas component;
     
     private Manager manager;
-    
+    /**
+     * Constructor de la clase MainShip , asigna valores a los atributos de 
+     * canvas y de graphics del objeto MainShip
+     * @param canvas canvas del objeto
+     * @param g objeto para dibujar
+     */
     public MainShip(Canvas  canvas, Manager g){
         ship =  Toolkit.getDefaultToolkit().getImage("Images/spaceship64bits.png");
         this.shipX = 400; //790 limite derecho //400 pos nave
@@ -42,18 +47,40 @@ public class MainShip implements KeyListener {
         
         
     }
+    /**
+     * Retorna la imagen de la nave principal
+     * @return ship
+     */
     public Image getImage(){
         return this.ship;
     }
+    /**
+     * Retorna la posicion en "x" de la nave principal
+     * @return 
+     */
     public int getX(){
         return this.shipX;
     }
+    /**
+     * retorna la posicion en "y" de la nave principal
+     * @return 
+     */
     public int getY(){
         return this.shipY;
     }
+    /**
+     * Retorna el objeto bala contenido en el objeto MainShip
+     * @return 
+     */
     public Bullet getBullet(){
         return this.b;
     }
+    
+    /**
+     * Metodo que dibuja la imagen de la nave principal en el canvas
+     * y a la vez activa el metodo dibujar del objeto bala
+     * @param g objeto encargado de dibujar 
+     */
     
     public void draw(Graphics2D g){
         g.drawImage(this.getImage(),this.getX(),this.getY(),this.component);
@@ -62,6 +89,11 @@ public class MainShip implements KeyListener {
         }
         
     }
+    
+    /**
+     * metodo que modifica las posiciones de la nave principal y verifica 
+     * limites para que no se salga de la pantalla
+     */
     
     public void update(){
         if(right && !left ){
@@ -88,11 +120,23 @@ public class MainShip implements KeyListener {
         }
     }
 
+    
+    /**
+     * Se activa cuando la tecla es presionada de manera rapida
+     * @param e 
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         
     }
 
+    /**
+     * Metodo que se activa cuando la tecla es presionada 
+     * dependiendo de la tecla ya sea left,right o space, cambia el flag a true
+     * de esa tecla para que el metodo update lo tome y modifique la posicion
+     * de la nave
+     * @param e 
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -113,6 +157,13 @@ public class MainShip implements KeyListener {
            
         }
     
+    /**
+     * Metodo que se activa cuando la tecla es soltada
+     * dependiendo de la tecla ya sea left,right o space, cambia el flag a false
+     * de esa tecla para que el metodo update lo tome y modifique la posicion
+     * de la nave
+     * @param e 
+     */
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -130,9 +181,17 @@ public class MainShip implements KeyListener {
     }
     
     
+  //Clase que permite la actualizacion de la posiciones del objeto bala
          class Shoot extends Thread{
              
 
+             /**
+              * Metodo heredado de la clase thread que inicia el proceso
+              * constantemente actualiza las posiciones del objeto bala
+              * y activa los flags para que esta sea dibujada en el draw del MainShip
+              * Tambien verifica constantemente que tipo de hilera se esta reproduciendo 
+              * actualmente para tomar decisiones a la hora de colisionar 
+              */
              @Override
              public void run(){
                  try {
@@ -246,7 +305,7 @@ public class MainShip implements KeyListener {
                                     } catch (InterruptedException ex) {
                                         Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
                                     }
-                                    manager.getPlayFrame().getCanvas().updateHilera(hilera);
+                                    
 
                                     
                                         

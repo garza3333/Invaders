@@ -64,6 +64,11 @@ public class PlayFrame{
         
     }
     
+    /**
+     * Constructor de la ventana de juego
+     * @param g objeto manager
+     * @param nameP nombre introducido en el entry en usserFrame
+     */
     public PlayFrame(Manager g,String nameP){
         this.bg = new Color(0,0,0);
  try {
@@ -199,16 +204,31 @@ public class PlayFrame{
         
         
     }
+    /**
+     * Retorna el atributo scorePlayer
+     * @return 
+     */
     public int getScorePlayer(){
         return this.scorePlayer;
     }
+    /**
+     * Retorna el label score de la ventana
+     * @return 
+     */
     public JLabel getScoreLabel(){
         return this.score;
     }
+    /**
+     * Modifica el valor del atributo scorePlayer y le suma "num"
+     * @param num 
+     */
     public void plusScorePlayer(int num){
         scorePlayer+= num;
     }
-
+    /**
+     * Retorna el atributo canvas de la ventana
+     * @return 
+     */
     public myCanvas getCanvas(){
         return this.canvas;
     }
@@ -220,9 +240,13 @@ public class PlayFrame{
         private final  MainShip mainShip;
         private boolean running;
         private Thread thread;
+        private boolean pruebaFlag;
+        private int pruebaInt;
         
        
-        
+        /**
+         * Constructor de la clase myCanvas
+         */
         public myCanvas(){
             
             
@@ -232,15 +256,19 @@ public class PlayFrame{
             mainShip = new MainShip(this,manager);
             
             
-            factory = new FactoryHilera(manager);
+            factory = new FactoryHilera();
+            pruebaInt = 2;
+            pruebaFlag = true;
             
-            currentHilera = factory.makeRow(4,0);
-            nextHilera = factory.makeRow(ThreadLocalRandom.current().nextInt(1,7),0);
+            currentHilera = factory.makeRow(1,0);
+            nextHilera = factory.makeRow(pruebaInt,0);
             
             current.setText(currentHilera.getType());
             currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
             next.setText(nextHilera.getType());
             nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
+            
+            
             
 
            
@@ -250,14 +278,24 @@ public class PlayFrame{
             setVisible(true);
 
         }
+        /**
+         * Retorna el atributo mainShip 
+         * @return 
+         */
         public MainShip getMainShip(){
             return this.mainShip;
         }
+        /**
+         * Retorna la hilera actual del canvas
+         * @return 
+         */
         public AbstractHilera getCurrentHilera(){
             return this.currentHilera;
         }
 
-        
+        /**
+         * Cambia la bandera de running a true para empezar el procesamiento
+         */
         public synchronized void start(){
 
             if(running){
@@ -268,6 +306,10 @@ public class PlayFrame{
             thread.start();
             
         }
+        /**
+         * Cambia la bandera de running a false para detener el procesamiento
+         * @throws InterruptedException 
+         */
         public synchronized void stop() throws InterruptedException{
             if(running){
                 return;
@@ -275,7 +317,10 @@ public class PlayFrame{
             running = false;
             thread.join();
         }
-        
+        /**
+         * Metodo que siempre ejecutara el metodo draw del canvas para 
+         * crear las animaciones
+         */
         @Override
         public void run(){
             
@@ -293,6 +338,11 @@ public class PlayFrame{
             
 
             }
+        /**
+         * Metodo que actualiza y dibuja todos los objetos 
+         * mainShip, Bullet , currentHilera
+         * @param bs objeto que se encarga de dibujar
+         */
         public void draw(BufferStrategy bs){
             
             do{
@@ -322,10 +372,31 @@ public class PlayFrame{
             }while(bs.contentsLost());
                 
         }
-        public void update(double delta){
-            
-        }
+ 
+        /**
+         * Si la hilera actual esta vacia entonces la cambia por la hilera 
+         * siguiente y la hilera siguiente la remplaza por una nueva creada por 
+         * el factory
+         * @param h hilera a actualizar
+         */
         public void updateHilera(AbstractHilera h){
+            if(pruebaFlag){
+                if(pruebaInt!=7){
+                if(h.getList().isEmpty()){
+                    pruebaInt ++;
+                        currentHilera = nextHilera;
+                        nextHilera = factory.makeRow(pruebaInt,scorePlayer/250);
+                        current.setText(currentHilera.getType());
+                        currentImage.setIcon(new ImageIcon(currentHilera.getList().getHead().getValue().getImage()));
+                        next.setText(nextHilera.getType());
+                        nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));                    
+                    
+                    }
+                }if(pruebaInt == 7){
+                    pruebaFlag = false;
+                }
+                
+            }else if(!pruebaFlag){
                     if(h.getList().isEmpty()){
            
                         currentHilera = nextHilera;
@@ -335,7 +406,7 @@ public class PlayFrame{
                         next.setText(nextHilera.getType());
                         nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));
                         
-                    }            
+                    }       }     
             
         }
                     

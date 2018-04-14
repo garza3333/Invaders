@@ -214,6 +214,7 @@ public class ShipD implements AbstractHilera{
     }
 
 
+   //Actualiza los valores de las posiciones de cada objeto del atributo lista
    public class Moviment extends Thread{
        @Override
        public void run(){

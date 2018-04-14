@@ -30,14 +30,14 @@ public class UsserFrame{
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg");
-    private Font fontTitle,fontButton;  
+    private Font fontTitle;  
     private Manager manager;
     private JTextField usserName;
     
     public UsserFrame(Manager g){
         try {
         fontTitle = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
-        fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
+        
         
         } 
         catch(FontFormatException | IOException e) 
@@ -134,19 +134,30 @@ public class UsserFrame{
     }
     
     
-         class Menu extends Manager implements ActionListener{
-  
+        //Accion cambiar a ventana de menu
+        class Menu implements ActionListener{
+            
+        /**
+         * Metodo que cambia a la ventana de menu
+         * @param e 
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             
             v.dispose();
-            this.show("main");
+            manager.show("main");
         }
         
            
        }
         
-        class Play extends Manager implements ActionListener{
+        //Accion cambiar a ventana de juego
+        
+        class Play implements ActionListener{
+            /**
+             * Metodo que cambia a la 
+             * @param e 
+             */
            @Override
            public void actionPerformed(ActionEvent e){
                v.dispose();

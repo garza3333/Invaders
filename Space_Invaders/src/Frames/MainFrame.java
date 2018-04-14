@@ -27,7 +27,7 @@ import javax.swing.JLabel;
 public final class MainFrame extends Manager{
     
     private static final JFrame v = new JFrame();
-//    private Font font;
+
     private final Image Icono = Toolkit.getDefaultToolkit().getImage("Images/startup.png");
     private final Image back = Toolkit.getDefaultToolkit().getImage("Images/background.jpg");
     
@@ -37,6 +37,11 @@ public final class MainFrame extends Manager{
     private Font fontTitle,fontButton;
     private final Manager manager;
     
+    /**
+     * Constructor de la clase MainFrame y asigna valor al parametro manager
+     * que es el objeto que administra todas las ventanas
+     * @param g 
+     */
     public MainFrame(Manager g){
         
         try 
@@ -52,11 +57,6 @@ public final class MainFrame extends Manager{
         this.manager = g;
         v.setTitle("Space Invaders");
         v.setFont(fontTitle);
-        
-        
-//        v.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        v.setLayout(new GridLayout());
-        
         
         
         v.setResizable(false);
@@ -84,7 +84,7 @@ public final class MainFrame extends Manager{
         icon.setIcon(new ImageIcon(("Images/astronave1.png")));
 
         icon.setBounds(550, 200, 250, 250);
-//        icon.setLocation(350,50);
+
         background.add(icon);
 
         
@@ -141,13 +141,7 @@ public final class MainFrame extends Manager{
       
       v.add(background);
       
-      
-//      v.getContentPane().validate();
-//      v.repaint();
-      
-      
       v.setVisible(true);
-//      this.moveShip(icon);
         
         
         
@@ -155,32 +149,15 @@ public final class MainFrame extends Manager{
         
     }
        
-//        public void moveShip(JLabel label){
-//            Thread t;
-//        t = new Thread(() -> {
-//            try{
-//                while(true){
-//                    
-//                    for (int i=0; i<10; i++){
-//                        label.setLocation((label.getLocationOnScreen().x+1), 0);
-//                        Thread.sleep(100);
-//                    }
-//                    for(int i = 0 ; i<10 ; i++){
-//                        label.setLocation((label.getLocationOnScreen().x-17),0);
-//                        Thread.sleep(100);
-//                    }
-//                }
-//            }catch(InterruptedException ae){
-//                
-//            }
-//            });
-//t.start();
-//        }
-  
-        
-    
-    static class Exit implements ActionListener
+
+    //Accion cerrar juego
+
+     class Exit implements ActionListener
     {
+         /**
+          * Metodo que scierra el programa
+          * @param e 
+          */
         @Override
         public void actionPerformed(ActionEvent e) 
         {
@@ -188,22 +165,31 @@ public final class MainFrame extends Manager{
         }
 
     }
-    static class Data extends Manager implements ActionListener{
+     //Accion ventana de datos
+     class Data implements ActionListener{
 
+         /**
+          * Metodo que llama a la ventana de datos
+          * @param e 
+          */
         @Override
         public void actionPerformed(ActionEvent e) {
            v.dispose();
-           this.show("data");
+           manager.show("data");
         }
         
     }
-    
-    static class Start extends Manager implements ActionListener {
+    //Accion ventana de usuario
+     class Start implements ActionListener {
 
+         /**
+          * Metodo que llama a la ventana de usuario
+          * @param e 
+          */
         @Override
         public void actionPerformed(ActionEvent e) {
             v.dispose();
-            this.show("start");
+            manager.show("start");
             
         }
     

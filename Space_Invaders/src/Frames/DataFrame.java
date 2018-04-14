@@ -24,14 +24,19 @@ public final class DataFrame {
     private final Color fg = new Color(0,0,0);
     private final Color bg = new Color(255,172,117);
     private static final JFrame v = new JFrame();
-    private Font fontPlayers,fontButton;
+    private Font fontPlayers;
     private final Manager manager;
+    
+    /**
+     * Constructor de la clase DataFrame
+     * @param g objeto manager de la clase
+     */
     public DataFrame(Manager g){
         
                 try 
         {
          fontPlayers = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/District.ttf"));
-         fontButton = Font.createFont(Font.TRUETYPE_FONT,new File("Fonts/virgo.ttf"));
+  
         
         } 
         catch(  FontFormatException | IOException e) 
@@ -59,6 +64,7 @@ public final class DataFrame {
         menu.setBackground(bg);
         menu.setForeground(fg);
         menu.setFocusPainted(false);
+     
         menu.setCursor(new Cursor(Cursor.HAND_CURSOR));
         menu.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, BLACK));
 
@@ -90,14 +96,16 @@ public final class DataFrame {
 
 
     }
+    
+        //Accion cambiar a ventana de menu
       
-        static class Funcion extends Manager implements ActionListener{
-  
+        class Funcion implements ActionListener{
+        // Metodo que cambia a la ventana de menu
         @Override
         public void actionPerformed(ActionEvent e) {
             
             v.dispose();
-            this.show("main");
+            manager.show("main");
         }
            
        }

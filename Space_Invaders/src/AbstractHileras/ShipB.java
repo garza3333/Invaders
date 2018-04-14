@@ -223,7 +223,7 @@ public class ShipB implements AbstractHilera{
            }
        }
    }
-   
+   //Clase encargada de estar cambiando el jefe constantemente
    public class ChangeBoss extends Thread{
         private int randomNum,previous;
     
@@ -261,6 +261,11 @@ public class ShipB implements AbstractHilera{
         
         }     
     }
+    /**
+     * verifica que el numero random siempre sea diferente
+     * @param n
+     * @return 
+     */
     public int verifica(int n){
         if(n == previous){
            

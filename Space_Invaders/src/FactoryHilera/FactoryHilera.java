@@ -15,16 +15,10 @@ import Frames.Manager;
  * @author Daniel
  */
 public class FactoryHilera implements AbstractFactoryHilera{
-   private Manager manager;
-    public  FactoryHilera(Manager m){
-        this.manager = m;
+ 
+    public FactoryHilera(){
         
     }
-    @Override
-    public void init() {
-  
-    }
-
     @Override
     public AbstractHilera makeRow(int h,int s) {
         switch(h){

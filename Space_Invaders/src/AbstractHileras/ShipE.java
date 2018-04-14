@@ -36,7 +36,7 @@ public class ShipE implements AbstractHilera{
         this.fb = new FactoryBasic();
         this.l = new DoublyCircularList();
         int cont = 0;
-        this.image = Toolkit.getDefaultToolkit().getImage("Images/shipD.png");
+        this.image = Toolkit.getDefaultToolkit().getImage("Images/shipE.png");
         this.imageBoss = Toolkit.getDefaultToolkit().getImage("Images/boss.png");
         this.type = "Type E";
         flag = true;
@@ -215,6 +215,7 @@ public class ShipE implements AbstractHilera{
     }
 
 
+   //Actualiza los valores de las posiciones de cada objeto del atributo lista
    public class Moviment extends Thread{
        @Override
        public void run(){
