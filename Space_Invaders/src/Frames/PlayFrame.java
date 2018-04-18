@@ -384,6 +384,7 @@ public class PlayFrame{
                 if(pruebaInt!=7){
                 if(h.getList().isEmpty()){
                     pruebaInt ++;
+                    System.out.println(pruebaInt);
                         currentHilera = nextHilera;
                         nextHilera = factory.makeRow(pruebaInt,scorePlayer/250);
                         current.setText(currentHilera.getType());
