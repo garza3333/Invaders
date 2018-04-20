@@ -26,7 +26,14 @@ public interface AbstractHilera {
      * @param y 
      */
     public void setPosY(int y);
+
     /**
+    * Retotorna la posicion general de la hilera para saber si ha tocado el borde
+    * de la pantalla
+    * @return atributo de posicion y de la hilera
+    */
+    public int getPosY();
+     /**
      * Retorna el atributo list de la hilera
      * @return lista enlazada
      */

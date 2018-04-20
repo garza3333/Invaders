@@ -5,6 +5,8 @@ import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -43,19 +45,21 @@ public class ShipD implements AbstractHilera{
         int pos = 0;
         
         
+        BubbleList lifeNumbers = this.bubleSort();
+        
         while(cont < 11){
             
             if(cont == 5){
-                Enemy e = fb.createEnemy(imageBoss, x+pos, 0, 5, true);
+                Enemy e = fb.createEnemy(imageBoss, x+pos, 0, lifeNumbers.findI(cont).getValue(), true);
                 Node ship = new Node(e);
                 l.add(ship);
-                cont+=1;
+                cont++;
                 pos+=40;
                         
             }            
             
             
-            Enemy e = fb.createEnemy(image,x+pos, 0, 1, false);
+            Enemy e = fb.createEnemy(image,x+pos, 0, lifeNumbers.findI(cont).getValue(), false);
             
             Node ship = new Node(e);
             l.add(ship);
@@ -92,6 +96,10 @@ public class ShipD implements AbstractHilera{
         Node temp = this.l.getHead();
         int cont = 0;
         while(cont!=l.getSize()){
+            
+            g.setFont(new Font("Helvetica",Font.BOLD,10));
+            g.setColor(Color.WHITE);
+            g.drawString(Integer.toString(temp.getValue().getLife()), (temp.getValue().getX()+12), (temp.getValue().getY()-10));
             
             g.drawImage(temp.getValue().getImage(),temp.getValue().getX(),temp.getValue().getY(),c);
             
@@ -187,7 +195,28 @@ public class ShipD implements AbstractHilera{
         }
     }
 
-    public BubbleList bubleSort(BubbleList list){
+    public BubbleList bubleSort(){
+        BubbleList list = new BubbleList();
+        int cont = 0;
+        while(cont<11){
+            int number =  ThreadLocalRandom.current().nextInt(1,7);
+            list.add(number);
+            cont++;
+        }
+        list.see();
+        for(int j = 0; j<list.getSize()-1;j++){
+        for(int i = 0; i<list.getSize()-1;i++){
+            
+                if(list.findI(i).getValue() > list.findI(i+1).getValue()){
+                    int temp = list.findI(i).getValue();
+                    list.findI(i).setValue(list.findI(i).getNext().getValue());
+                    list.findI(i+1).setValue(temp);
+                }
+                
+            
+            }
+        }
+        list.see();
         return list;
         
         
@@ -213,6 +242,11 @@ public class ShipD implements AbstractHilera{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public int getPosY() {
+        return this.y;
+    }
+
 
    //Actualiza los valores de las posiciones de cada objeto del atributo lista
    public class Moviment extends Thread{
@@ -232,15 +266,15 @@ public class ShipD implements AbstractHilera{
                } catch (InterruptedException ex) {
                    Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
                }
-           }else if(speed >= 2){
-               try {
-                   Moviment.sleep(4);
-               } catch (InterruptedException ex) {
-                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
-               }
            }else if(speed >= 6){
                try {
                    Moviment.sleep(2);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }else if(speed >= 2){
+               try {
+                   Moviment.sleep(4);
                } catch (InterruptedException ex) {
                    Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
                }
@@ -269,17 +303,66 @@ public class ShipD implements AbstractHilera{
        public BubbleNode getTail(){
            return this.tail;
        }
+       public void see(){
+           this.se();
+       }
+       
+       
+       
+    private void se(){
+        
+        BubbleList.BubbleNode temp = head;
+        System.out.print("[");
+        while(temp.getNext()!=null){
+            System.out.print(temp.getValue()+",");
+            temp = temp.getNext();
+        } System.out.println(temp.getValue()+"]");
+    }       
+       
+       
+       
        public void add(int n){
            if(isEmpty()){
-               this.head = new BubbleNode(n);
+               this.head = this.tail = new BubbleNode(n);
            }else{
-               BubbleNode temp = this.getTail();
+               
                BubbleNode nuevo = new BubbleNode(n);
-               temp.setNext(nuevo);
+               tail.setNext(nuevo);
                this.tail = nuevo;
            }
            size++;
        }
+       
+       
+       
+       
+       
+    public BubbleNode findI(int i) {
+        return this.fiIn(i);
+    }
+    
+    private BubbleNode fiIn(int i){
+        BubbleNode temp = this.getHead();
+        int cont = 0;
+        
+ 
+        while(cont<=i){
+            if(cont==i){
+                return temp;
+            }else{
+            temp = temp.getNext();
+            cont++;
+            }
+        }
+        
+        return null;        
+        
+    }       
+       
+       
+       
+       
+       
        
        
        public class BubbleNode{

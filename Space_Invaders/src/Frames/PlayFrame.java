@@ -358,7 +358,10 @@ public class PlayFrame{
                     
                     
                     updateHilera(currentHilera);
-                    
+                    if(currentHilera.getPosY() == 500){
+                        v.dispose();
+                        manager.show("main");
+                    }
                     currentHilera.draw(this, g);
                     mainShip.draw(g);
                     mainShip.update();
@@ -381,9 +384,12 @@ public class PlayFrame{
          */
         public void updateHilera(AbstractHilera h){
             if(pruebaFlag){
-                if(pruebaInt!=7){
+                if(pruebaInt!=6){
                 if(h.getList().isEmpty()){
                     pruebaInt ++;
+                    if(pruebaInt == 6){
+                            pruebaFlag = false;
+                        }                    
                     System.out.println(pruebaInt);
                         currentHilera = nextHilera;
                         nextHilera = factory.makeRow(pruebaInt,scorePlayer/250);
@@ -393,8 +399,6 @@ public class PlayFrame{
                         nextImage.setIcon(new ImageIcon(nextHilera.getList().getHead().getValue().getImage()));                    
                     
                     }
-                }if(pruebaInt == 7){
-                    pruebaFlag = false;
                 }
                 
             }else if(!pruebaFlag){

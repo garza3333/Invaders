@@ -5,6 +5,8 @@ import AbstractEnemy.Enemy;
 import FactoryEnemies.FactoryBasic;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -91,6 +93,10 @@ public class ShipC implements AbstractHilera{
         
         while(cont != l.getSize()){
             
+            g.setFont(new Font("Helvetica",Font.BOLD,10));
+            g.setColor(Color.WHITE);
+            g.drawString(Integer.toString(temp.getValue().getLife()), (temp.getValue().getX()+12), (temp.getValue().getY()-10));
+            
             g.drawImage(temp.getValue().getImage(),temp.getValue().getX(),temp.getValue().getY(),c);
             
             temp = temp.getNext();
@@ -169,7 +175,8 @@ public class ShipC implements AbstractHilera{
     
     @Override
     public void changeBoss(){
-        System.out.println("change");
+        
+        
         
         int cont = 0;
         
@@ -209,6 +216,11 @@ public class ShipC implements AbstractHilera{
     public void destroyAll() {
     }
 
+    @Override
+    public int getPosY() {
+        return this.y;
+    }
+
 
     //Actualiza los valores de las posiciones de cada objeto del atributo lista
    public class Moviment extends Thread{
@@ -228,15 +240,15 @@ public class ShipC implements AbstractHilera{
                } catch (InterruptedException ex) {
                    Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
                }
-           }else if(speed >= 2){
-               try {
-                   Moviment.sleep(4);
-               } catch (InterruptedException ex) {
-                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
-               }
            }else if(speed >= 6){
                try {
                    Moviment.sleep(2);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }else if(speed >= 2){
+               try {
+                   Moviment.sleep(6);
                } catch (InterruptedException ex) {
                    Logger.getLogger(Basic.class.getName()).log(Level.SEVERE, null, ex);
                }

@@ -106,7 +106,7 @@ public class LinkedList implements AbstractList{
                 break;
             }else if(n == this.getSize()-1){
                 
-                System.out.println("ultimo");
+                
                 
                 temp = this.getHead();
                 

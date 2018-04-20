@@ -194,12 +194,8 @@ public class MainShip implements KeyListener {
               */
              @Override
              public void run(){
-                 try {
-                     Shoot.sleep(2);
-                 } catch (InterruptedException ex) {
-                     Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                 
+                boolean verdad = true;
+
                 b.update(shipX+8,shipY);
                 
                 shoot = true;
@@ -218,26 +214,19 @@ public class MainShip implements KeyListener {
                         
                         
                         
-                        while(temp!=null){
+                        while(temp!=null && verdad){
                             if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
                               && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
-                                System.out.println("colision b B A");
+                                verdad = false;
                                 
-                                
-                                if(temp.getValue().isBoss()){
-                                    manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
+                                if(temp.getValue().getLife() == 1)
+                                {                                
+                                    if(temp.getValue().isBoss()){
+                                    
                                         
 
-                                    
-                                    
-                                    shoot = false;
-                                    flagS = false;
                                     hilera.destroyAll();
-//                                    try {
-//                                        Shoot.sleep(5);
-//                                    } catch (InterruptedException ex) {
-//                                        Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
-//                                    }
                                     
 
                                     manager.getPlayFrame().getCanvas().updateHilera(hilera);
@@ -245,15 +234,13 @@ public class MainShip implements KeyListener {
                                         
                                     break;
                                     }else{
+                                       hilera.destroy(cont); 
+                                       break;
+                                    }
+                                }
+                                else{
                                 
-                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
-
-                                
-                                shoot = false;
-                                flagS = false;
-                                hilera.destroy(cont);
-
-                                
+                                temp.getValue().setLife(temp.getValue().getLife()-1);
 
                                 break;}
                                 
@@ -264,26 +251,83 @@ public class MainShip implements KeyListener {
                         }
                         
                         
-                    }else if(hilera.getClass() == ShipD.class || hilera.getClass() == ShipE.class){
-                        
+                    }else if(hilera.getClass() == ShipD.class){
                         int ind = 0;
-                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()){
+                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()&&verdad){
+                            
+                            
                             if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
                               && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
-                                System.out.println("colision C D E");
                                 
-                                shoot = false;
+                                verdad = false;
                                 flagS = false;
-                                hilera.destroy(cont);
-              
-        
-                                manager.getPlayFrame().plusScorePlayer(hilera.getList().getHead().getValue().getLife()*10);
+                                shoot = false;
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
                                 
-                                break;
+                                if(temp.getValue().getLife() == 1){
+                                if(temp.getValue().isBoss()){
+                                    
+
+                                    hilera.destroy(cont);
+
+                                    hilera.changeBoss();                                    
+
+                                        
+                                    break;
+                                    }else{
+                                    hilera.destroy(cont);
+                                }
+                                }
+                                else{                                
                                 
+                                temp.getValue().setLife(temp.getValue().getLife()-1);
+
+                                break;}
                                 
+
+                            }
+                            temp = temp.getNext();
+                            cont++;
+                            ind++;
+                        }                          
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    else if(hilera.getClass() == ShipE.class){
+                        
+                        int ind = 0;
+                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize() && verdad){
+                            if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
+                              && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
+                                verdad = false;
                                 
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
                                 
+                                if(temp.getValue().getLife() == 1){
+                                if(temp.getValue().isBoss()){
+                                    
+
+                                    hilera.destroy(cont);
+
+                                    hilera.changeBoss();                                    
+
+                                        
+                                    break;
+                                    }else{
+                                    hilera.destroy(cont);
+                                }
+                                }
+                                else{                                
+                                
+                                temp.getValue().setLife(temp.getValue().getLife()-1);
+
+                                break;}
+                                
+
                             }
                             temp = temp.getNext();
                             cont++;
@@ -293,50 +337,36 @@ public class MainShip implements KeyListener {
                         
                         
                         int ind = 0;
-                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize()){
+                        while(ind!=manager.getPlayFrame().getCanvas().getCurrentHilera().getList().getSize() && verdad){
                             if(b.getX()<temp.getValue().getX()+32 && b.getX()+16>temp.getValue().getX()
                               && b.getY()<temp.getValue().getY()+32 && b.getY()+16 > temp.getValue().getY()){
-                                System.out.println("colision C D E");
                                 
+                                verdad = false;
                                 
+                                manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
                                 
+                                if(temp.getValue().getLife() == 1){
                                 if(temp.getValue().isBoss()){
-                                    manager.getPlayFrame().plusScorePlayer(hilera.getList().findI(cont).getLife()*10);
-
-                                   
-                                    shoot = false;
-                                    flagS = false;
-                                    hilera.destroy(cont);
-
-                                    hilera.changeBoss();                                    
-//                                    try {
-//                                        Shoot.sleep(5);
-//                                    } catch (InterruptedException ex) {
-//                                        Logger.getLogger(MainShip.class.getName()).log(Level.SEVERE, null, ex);
-//                                    }
                                     
 
+                                    hilera.destroy(cont);
+                                   
+                                    hilera.changeBoss();
+                                                          
 
                                         
                                     break;
-                                    }else{                                
+                                    }else{
+                                    hilera.destroy(cont);
+                                }
+                                }
+                                else{                                
                                 
-                                
-                                manager.getPlayFrame().plusScorePlayer(hilera.getList().getHead().getValue().getLife()*10);
-                                
-                                shoot = false;
-                                flagS = false;
-                                hilera.destroy(cont);
-                                
-              
-        
-                                
-                                
+                                temp.getValue().setLife(temp.getValue().getLife()-1);
+
                                 break;}
                                 
-                                
-                                
-                                
+
                             }
                             temp = temp.getNext();
                             cont++;
